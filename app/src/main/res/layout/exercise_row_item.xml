@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/exercise_row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/exercise_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/exercise_img"
                 android:layout_width="18dp"
                 android:layout_height="64dp"
                 android:layout_weight="1"
@@ -44,8 +45,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        style="@style/TextAppearance.AppCompat.Heading"
                         android:id="@+id/exercise_name"
+                        style="@style/TextAppearance.AppCompat.Heading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Hammer Curls"
@@ -53,8 +54,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        style="@style/TextAppearance.AppCompat.Label"
                         android:id="@+id/exercise_category"
+                        style="@style/TextAppearance.AppCompat.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Dumbbells"

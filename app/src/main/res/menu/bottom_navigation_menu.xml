@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_item_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/route_home" />
+    <item
+        android:id="@+id/nav_item_history"
+        android:icon="@drawable/ic_history"
+        android:title="@string/route_history" />
+    <item
+        android:id="@+id/nav_item_workouts"
+        android:icon="@drawable/ic_workout"
+        android:title="@string/route_workouts" />
+    <item
+        android:id="@+id/nav_item_exercises"
+        android:icon="@drawable/ic_dumbbell"
+        android:title="@string/route_exercises" />
+    <item
+        android:id="@+id/nav_item_measurements"
+        android:icon="@drawable/ic_measure"
+        android:title="@string/route_measurements" />
+</menu>

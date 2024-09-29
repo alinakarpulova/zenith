@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Zenith</string>
+
+<!--    Routes-->
+    <string name="route_home">Home</string>
+    <string name="route_history">History</string>
+    <string name="route_workouts">Workouts</string>
+    <string name="route_exercises">Exercises</string>
+    <string name="route_measurements">Measurements</string>
 </resources>
