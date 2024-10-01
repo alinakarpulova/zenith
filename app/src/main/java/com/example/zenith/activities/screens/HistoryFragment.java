@@ -1,4 +1,4 @@
-package com.example.zenith.activities.fragments;
+package com.example.zenith.activities.screens;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.zenith.R;
 
-public class ExercisesFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
-    public ExercisesFragment() {
+    public HistoryFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.exercises_fragment, container, false);
+        return inflater.inflate(R.layout.history_fragment, container, false);
     }
 }

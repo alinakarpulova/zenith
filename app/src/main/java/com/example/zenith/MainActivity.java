@@ -12,11 +12,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.zenith.activities.fragments.ExercisesFragment;
-import com.example.zenith.activities.fragments.HistoryFragment;
-import com.example.zenith.activities.fragments.HomeFragment;
-import com.example.zenith.activities.fragments.MeasurementsFragment;
-import com.example.zenith.activities.fragments.WorkoutsFragment;
+import com.example.zenith.activities.screens.exercises.ExercisesFragment;
+import com.example.zenith.activities.screens.HistoryFragment;
+import com.example.zenith.activities.screens.HomeFragment;
+import com.example.zenith.activities.screens.MeasurementsFragment;
+import com.example.zenith.activities.screens.WorkoutsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Default Fragment
                 Fragment selectedFragment = new HomeFragment();
                 int id = item.getItemId();
                 if (id == R.id.nav_item_home) {
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 if (id == R.id.nav_item_measurements){
                     selectedFragment = new MeasurementsFragment();
                 }
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.main, selectedFragment).commit();
                 return true;
             }
