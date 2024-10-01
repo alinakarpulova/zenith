@@ -16,4 +16,5 @@
     <string name="exercise_name_hint">Exercise Name</string>
     <string name="category_label">Category</string>
     <string name="bodypart_label">Body Part</string>
+    <string name="action_workout_create">Create Empty Workout</string>
 </resources>

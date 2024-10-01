@@ -16,7 +16,7 @@ import com.example.zenith.activities.screens.exercises.ExercisesFragment;
 import com.example.zenith.activities.screens.HistoryFragment;
 import com.example.zenith.activities.screens.HomeFragment;
 import com.example.zenith.activities.screens.MeasurementsFragment;
-import com.example.zenith.activities.screens.WorkoutsFragment;
+import com.example.zenith.activities.screens.workouts.WorkoutsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

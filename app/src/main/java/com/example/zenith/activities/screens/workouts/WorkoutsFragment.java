@@ -1,4 +1,4 @@
-package com.example.zenith.activities.screens;
+package com.example.zenith.activities.screens.workouts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
