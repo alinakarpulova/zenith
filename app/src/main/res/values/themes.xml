@@ -8,6 +8,6 @@
         <item name="labelFontFamily">@font/inter_light</item>
     </style>
 
-
+    <color name="shapeBackground">@color/cardview_light_background</color>
     <style name="Theme.Zenith" parent="Base.Theme.Zenith" />
 </resources>

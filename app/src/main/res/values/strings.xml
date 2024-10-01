@@ -10,6 +10,8 @@
 
     <string name="action_confirm">OK</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_submit">Submit</string>
+    <string name="action_finish">Finish</string>
 
     <string name="exercise_name_hint">Exercise Name</string>
     <string name="category_label">Category</string>

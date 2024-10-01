@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -37,6 +36,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                android:id="@+id/exercise_name_edit_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/exercise_name_hint"
@@ -58,17 +58,19 @@
 
             <TextView
                 android:id="@+id/category_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/category_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
 
-            <Spinner
-                android:id="@+id/category_dropdown"
+            <Button
+                android:id="@+id/category_dialog_btn"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:spinnerMode="dialog" />
+                android:layout_height="wrap_content"
+                android:text="@string/category_label"
+                app:cornerRadius="8dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,27 +87,33 @@
 
             <TextView
                 android:id="@+id/bodypart_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/bodypart_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
 
-            <Spinner
-                android:id="@+id/bodypart_dropdown"
+            <Button
+                android:id="@+id/bodypart_dialog_btn"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:spinnerMode="dialog" />
+                android:layout_height="wrap_content"
+                android:text="@string/bodypart_label"
+                app:cornerRadius="8dp"/>
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button3"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/submit_exercise_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="51dp"
-            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            android:contentDescription="@string/action_submit"
+            android:layout_margin="16dp"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_check_1"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
