@@ -7,4 +7,11 @@
     <string name="route_workouts">Workouts</string>
     <string name="route_exercises">Exercises</string>
     <string name="route_measurements">Measurements</string>
+
+    <string name="action_confirm">OK</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="exercise_name_hint">Exercise Name</string>
+    <string name="category_label">Category</string>
+    <string name="bodypart_label">Body Part</string>
 </resources>
