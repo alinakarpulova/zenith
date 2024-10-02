@@ -12,11 +12,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.zenith.activities.screens.exercises.ExercisesFragment;
 import com.example.zenith.activities.screens.HistoryFragment;
 import com.example.zenith.activities.screens.HomeFragment;
 import com.example.zenith.activities.screens.MeasurementsFragment;
+import com.example.zenith.activities.screens.exercises.ExercisesFragment;
 import com.example.zenith.activities.screens.workouts.WorkoutsFragment;
+import com.example.zenith.controllers.DatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         // Time Backport for API 24 support
         AndroidThreeTen.init(this);
 
+        DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+        databaseHelper.getWritableDatabase();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 if (id == R.id.nav_item_exercises) {
                     selectedFragment = new ExercisesFragment();
                 }
-                if (id == R.id.nav_item_measurements){
+                if (id == R.id.nav_item_measurements) {
                     selectedFragment = new MeasurementsFragment();
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.main, selectedFragment).commit();
