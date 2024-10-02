@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/workout_new_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/workout_new_topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_history"
+            app:iconGravity="textStart"
+            app:iconSize="24dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter_medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/action_finish"
+            app:cornerRadius="3dp" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/workout_new_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/workout_new_root"
+        app:layout_constraintEnd_toEndOf="@id/workout_new_root"
+        app:layout_constraintStart_toStartOf="@id/workout_new_root"
+        app:layout_constraintTop_toBottomOf="@id/workout_new_topbar_layout">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="12dp"
+            app:layout_constraintEnd_toEndOf="@id/workout_new_content_layout"
+            app:layout_constraintStart_toStartOf="@id/workout_new_content_layout"
+            app:layout_constraintTop_toTopOf="@id/workout_new_content_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/workout_name_txt"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/workout_name_hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

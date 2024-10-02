@@ -19,12 +19,17 @@ import com.example.zenith.activities.screens.MeasurementsFragment;
 import com.example.zenith.activities.screens.workouts.WorkoutsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemReselectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Time Backport for API 24 support
+        AndroidThreeTen.init(this);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 

@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
                 android:id="@+id/exercise_name_edit_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
