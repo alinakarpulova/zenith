@@ -18,4 +18,9 @@
     <string name="bodypart_label">Body Part</string>
     <string name="action_workout_create">Create Empty Workout</string>
     <string name="workout_name_hint">Workout Name</string>
+    <string name="action_add_set">Add Set</string>
+    <string name="label_set">SET</string>
+    <string name="label_previous">PREVIOUS</string>
+    <string name="label_lbs">LBS</string>
+    <string name="label_reps">REPS</string>
 </resources>
