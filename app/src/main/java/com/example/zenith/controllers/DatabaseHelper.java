@@ -1,5 +1,6 @@
 package com.example.zenith.controllers;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -57,10 +58,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<Exercise> fetchExercises() {
+    public List<Exercise> getExerciseList() {
         List<Exercise> exercises = new ArrayList<>();
 
-        String query = "SELECT * FROM exercises";
+        String query = "SELECT * FROM exercises where id < 10 OR deletable = 1";
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -81,6 +82,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exercises;
+    }
+
+    public void addExercise(Exercise exercise) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseDefs.EXERCISE_NAME, exercise.getName());
+        contentValues.put(DatabaseDefs.EXERCISE_CATEGORY, exercise.getExerciseCategory().toString());
+        contentValues.put(DatabaseDefs.EXERCISE_BODYPART, exercise.getExerciseBodyPart().toString());
+        contentValues.put(DatabaseDefs.EXERCISE_MODIFIABLE, exercise.isModifiable());
+        db.insert(DatabaseDefs.EXERCISE_TABLE, null, contentValues);
     }
 
 }

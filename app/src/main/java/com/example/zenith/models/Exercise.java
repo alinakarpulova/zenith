@@ -12,10 +12,11 @@ public class Exercise {
     private boolean deletable;
 
 
-    public Exercise(String name, ExerciseCategory category, ExerciseBodyPart bodyPart) {
+    public Exercise(String name, ExerciseCategory category, ExerciseBodyPart bodyPart, @Nullable Boolean deletable) {
         this.name = name;
         this.exerciseCategory = category;
         this.exerciseBodyPart = bodyPart;
+        this.deletable = deletable != null ? deletable : false;
     }
 
 
@@ -67,7 +68,7 @@ public class Exercise {
         this.exerciseCategory = exerciseCategory;
     }
 
-    public boolean isDeletable() {
+    public boolean isModifiable() {
         return deletable;
     }
 

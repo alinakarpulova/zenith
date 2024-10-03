@@ -28,6 +28,7 @@ public class WorkoutsFragment extends Fragment {
             startActivity(intent);
         });
 
+
         return fragmentView;
     }
 }
