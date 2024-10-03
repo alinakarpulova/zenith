@@ -46,19 +46,19 @@
 
                     <TextView
                         android:id="@+id/exercise_name"
-                        style="@style/TextAppearance.AppCompat.Heading"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Hammer Curls"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Heading"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/exercise_category"
-                        style="@style/TextAppearance.AppCompat.Label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Dumbbells"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Label"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/exercise_name" />
