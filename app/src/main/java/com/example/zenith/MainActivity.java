@@ -18,9 +18,14 @@ import com.example.zenith.activities.screens.MeasurementsFragment;
 import com.example.zenith.activities.screens.exercises.ExercisesFragment;
 import com.example.zenith.activities.screens.workouts.WorkoutsFragment;
 import com.example.zenith.controllers.DatabaseHelper;
+import com.example.zenith.models.Exercise;
+import com.example.zenith.models.ExerciseBodyPart;
+import com.example.zenith.models.ExerciseCategory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemReselectedListener {
 
@@ -32,7 +37,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         AndroidThreeTen.init(this);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
-        databaseHelper.getWritableDatabase();
+        try {
+            databaseHelper.copyDatabaseIfNeeded(); // Prepopulate database with exercise data
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 

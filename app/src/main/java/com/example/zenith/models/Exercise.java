@@ -1,5 +1,7 @@
 package com.example.zenith.models;
 
+import androidx.annotation.Nullable;
+
 public class Exercise {
     private int id;
     private String name;
@@ -9,8 +11,16 @@ public class Exercise {
     private boolean deletable;
 
 
-    public Exercise(int id, String name, String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
-        this.id = id;
+    public Exercise(String name, ExerciseCategory category, ExerciseBodyPart bodyPart) {
+        this.name = name;
+        this.exerciseCategory = category;
+        this.exerciseBodyPart = bodyPart;
+    }
+
+    public Exercise(@Nullable Integer id, String name, String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
+        if (id != null) {
+            this.id = id;
+        }
         this.name = name;
         this.description = description;
         this.exerciseBodyPart = exerciseBodyPart;
@@ -22,7 +32,7 @@ public class Exercise {
         return exerciseBodyPart;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
