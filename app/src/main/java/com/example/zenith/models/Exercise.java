@@ -5,7 +5,8 @@ import androidx.annotation.Nullable;
 public class Exercise {
     private int id;
     private String name;
-    private String description;
+    private String image;
+    private String instructions;
     private ExerciseCategory exerciseCategory;
     private ExerciseBodyPart exerciseBodyPart;
     private boolean deletable;
@@ -17,12 +18,14 @@ public class Exercise {
         this.exerciseBodyPart = bodyPart;
     }
 
-    public Exercise(@Nullable Integer id, String name, String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
+
+    public Exercise(@Nullable Integer id, String name, String image,String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
         if (id != null) {
             this.id = id;
         }
+        this.image = image;
         this.name = name;
-        this.description = description;
+        this.instructions = description;
         this.exerciseBodyPart = exerciseBodyPart;
         this.exerciseCategory = exerciseCategory;
         this.deletable = deletable;
@@ -49,11 +52,11 @@ public class Exercise {
     }
 
     public String getDescription() {
-        return description;
+        return instructions;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.instructions = description;
     }
 
     public ExerciseCategory getExerciseCategory() {

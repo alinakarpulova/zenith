@@ -23,5 +23,14 @@ public enum ExerciseBodyPart {
     public String toString() {
         return value;
     }
+
+    public static ExerciseBodyPart fromString(String bodyPartString) throws IllegalArgumentException {
+        for (ExerciseBodyPart bodyPart : ExerciseBodyPart.values()) {
+            if (bodyPart.toString().equals(bodyPartString)) {
+                return bodyPart;
+            }
+        }
+        throw new IllegalArgumentException(bodyPartString + " is not a valid Exercise Body Part");
+    }
 }
 

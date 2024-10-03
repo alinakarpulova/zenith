@@ -1,6 +1,5 @@
 package com.example.zenith.activities.screens.exercises;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
 import com.example.zenith.activities.adapters.ExerciseRowAdapter;
+import com.example.zenith.controllers.DatabaseHelper;
 import com.example.zenith.models.Exercise;
-import com.example.zenith.models.ExerciseBodyPart;
-import com.example.zenith.models.ExerciseCategory;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ExercisesFragment extends Fragment {
@@ -39,30 +36,10 @@ public class ExercisesFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        List<Exercise> exercises = Arrays.asList(
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST),
-                new Exercise("Bench Press", ExerciseCategory.DUMBBELL, ExerciseBodyPart.CHEST)
-        );
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        List<Exercise> exercises = databaseHelper.fetchExercises();
 
-        ExerciseRowAdapter adapter = new ExerciseRowAdapter((Exercise[]) exercises.toArray());
+        ExerciseRowAdapter adapter = new ExerciseRowAdapter(exercises.toArray(new Exercise[0]));
         RecyclerView recyclerView = view.findViewById(R.id.exercises_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(adapter);

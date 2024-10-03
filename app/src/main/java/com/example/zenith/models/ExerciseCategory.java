@@ -21,4 +21,13 @@ public enum ExerciseCategory {
     public String toString() {
         return value;
     }
+
+    public static ExerciseCategory fromString(String categoryString) throws  IllegalArgumentException{
+        for (ExerciseCategory category: ExerciseCategory.values()){
+            if (category.toString().equals(categoryString)){
+                return category;
+            }
+        }
+        throw  new IllegalArgumentException(categoryString + " is not a valid Exercise Category");
+    }
 }
