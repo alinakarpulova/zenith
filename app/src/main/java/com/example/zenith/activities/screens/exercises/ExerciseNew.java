@@ -1,5 +1,7 @@
 package com.example.zenith.activities.screens.exercises;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,6 +41,10 @@ public class ExerciseNew extends AppCompatActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.exercise_new_activity);
 
+        toolbar = findViewById(R.id.static_toolbar);
+        toolbar.setTitle(R.string.new_exercise);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+
         controller = new ExerciseController(new DatabaseHelper(this));
 
         List<ExerciseCategory> categories = Arrays.asList(ExerciseCategory.values());
@@ -50,8 +56,10 @@ public class ExerciseNew extends AppCompatActivity {
         GenericDialog<ExerciseCategory> categoriesDialog = new GenericDialog<>(res.getString(R.string.category_label), categories, ExerciseNew.this);
         GenericDialog<ExerciseBodyPart> bodyPartsDialog = new GenericDialog<>(res.getString(R.string.bodypart_label), bodyParts, ExerciseNew.this);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener((view -> {
+            finish();
+        }));
 
         categoryDialogBtn = findViewById(R.id.category_dialog_btn);
         categoryDialogBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +117,10 @@ public class ExerciseNew extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ExerciseNew.class);
     }
 
     private void enableSubmit() {

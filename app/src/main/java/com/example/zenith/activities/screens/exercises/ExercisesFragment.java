@@ -1,13 +1,23 @@
 package com.example.zenith.activities.screens.exercises;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,24 +38,48 @@ public class ExercisesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         exerciseController = new ExerciseController(new DatabaseHelper(getContext()));
-
         View view = inflater.inflate(R.layout.exercises_fragment, container, false);
-        Button button = view.findViewById(R.id.button2);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+
 
         recyclerView = view.findViewById(R.id.exercises_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         updateList();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ExerciseNew.class);
-                startActivity(intent);
-            }
-        });
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.exercise_menu, menu);
+            }
+
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                int menu_id = menuItem.getItemId();
+                if (menu_id == R.id.exercise_create) {
+                    Intent intent = ExerciseNew.makeIntent(getContext());
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
+    }
+
 
     private void updateList() {
         adapter = new ExerciseRowAdapter(exerciseController.getExerciseList().toArray(new Exercise[0]));

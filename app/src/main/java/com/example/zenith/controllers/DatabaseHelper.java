@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Exercise> getExerciseList() {
         List<Exercise> exercises = new ArrayList<>();
 
-        String query = "SELECT * FROM exercises where id < 10 OR deletable = 1";
+        String query = "SELECT * FROM exercises where id < 20 OR deletable = 1";
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);

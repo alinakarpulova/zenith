@@ -1,13 +1,17 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Base.Theme.Zenith" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
         <item name="headingFontFamily">@font/inter_medium</item>
         <item name="bodyFontFamily">@font/inter</item>
         <item name="labelFontFamily">@font/inter_light</item>
     </style>
 
     <color name="shapeBackground">@color/cardview_light_background</color>
+
     <style name="Theme.Zenith" parent="Base.Theme.Zenith" />
 </resources>
