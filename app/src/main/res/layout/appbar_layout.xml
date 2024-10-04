@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsingToolbar"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
         android:background="?attr/colorSurfaceContainer"
         app:title="Exercises">

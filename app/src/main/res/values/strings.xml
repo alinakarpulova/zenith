@@ -26,4 +26,5 @@
     <string name="placeholder">Placeholder</string>
     <string name="action_exercise_create">Create Exercise</string>
     <string name="new_exercise">New Exercise</string>
+    <string name="action_search">Search</string>
 </resources>

@@ -3,6 +3,8 @@ package com.example.zenith.activities.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,8 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.zenith.R;
 import com.example.zenith.models.Exercise;
 
-public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.ViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.ViewHolder> implements Filterable {
     Exercise[] exercises;
+    private Filter filter;
+    private List<Exercise> filteredExercises; // List for filtered results
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
@@ -43,6 +51,7 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
 
     public ExerciseRowAdapter(Exercise[] exercises) {
         this.exercises = exercises;
+        this.filteredExercises = new ArrayList<>(List.of(exercises));
     }
 
     // Create new views (invoked by the layout manager)
@@ -58,17 +67,58 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getName().setText(exercises[position].getName());
-        viewHolder.getLabel().setText(exercises[position].getExerciseCategory().toString());
+        viewHolder.getName().setText(filteredExercises.get(position).getName());
+        viewHolder.getLabel().setText(filteredExercises.get(position).getExerciseCategory().toString());
     }
 
     @Override
     public long getItemId(int i) {
-        return exercises[i].getId();
+        return filteredExercises.get(i).getId();
     }
 
     @Override
     public int getItemCount() {
-        return exercises.length;
+        return filteredExercises.size();
+    }
+
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new ExerciseFilter();
+        }
+        return filter;
+    }
+
+    private class ExerciseFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterPattern = constraint != null ? constraint.toString().toLowerCase().trim() : "";
+
+            FilterResults results = new FilterResults();
+            List<Exercise> filteredList = new ArrayList<>();
+
+            if (filterPattern.isEmpty()) {
+                // If no filter is applied, return the original exercises
+                filteredList.addAll(List.of(exercises));
+            } else {
+                // Filter by name and category
+                for (Exercise exercise : exercises) {
+                    if (exercise.getName().toLowerCase().contains(filterPattern) ||
+                            exercise.getExerciseCategory().toString().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(exercise);
+                    }
+                }
+            }
+
+            results.values = filteredList;
+            results.count = filteredList.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredExercises.clear();
+            filteredExercises.addAll((List<Exercise>) results.values);
+            notifyDataSetChanged(); // Notify adapter about data change
+        }
     }
 }

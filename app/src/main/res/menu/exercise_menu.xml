@@ -3,9 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/exercise_create"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/action_exercise_create"
-        app:showAsAction="never">
-
-    </item>
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/exercise_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="@string/action_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

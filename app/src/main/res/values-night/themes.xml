@@ -11,8 +11,10 @@
         <item name="bodyFontFamily">@font/inter</item>
         <item name="labelFontFamily">@font/inter_light</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
     </style>
 
+    <color name="iconTint">#ffff</color>
     <color name="shapeBackground">@color/cardview_dark_background</color>
     <style name="Theme.Zenith" parent="Base.Theme.Zenith" />
 
