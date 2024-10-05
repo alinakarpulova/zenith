@@ -10,13 +10,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zenith.R;
+import com.example.zenith.controllers.DatabaseHelper;
+import com.example.zenith.models.Exercise;
 import com.example.zenith.models.Workout;
+import com.example.zenith.models.WorkoutExercise;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
 
 public class WorkoutNew extends AppCompatActivity {
     Workout workout = new Workout("New Workout");
     MaterialButton addExerciseButton;
     LinearLayout exerciseList;
+
+    List<Exercise> exercises;
+    private int i = 0;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -24,13 +32,16 @@ public class WorkoutNew extends AppCompatActivity {
 
         setContentView(R.layout.workout_new);
 
+        exercises = new DatabaseHelper(this).getExerciseList();
+
         addExerciseButton = findViewById(R.id.add_exercise_btn);
         exerciseList = findViewById(R.id.workout_exercise_list);
 
         addExerciseButton.setOnClickListener((view) -> {
-            exerciseList.addView(new WorkoutRow(this));
+            WorkoutExercise workoutExercise = new WorkoutExercise(exercises.get(i));
+            i++;
+            exerciseList.addView(new WorkoutRow(this, workoutExercise));
         });
-
     }
 
 
