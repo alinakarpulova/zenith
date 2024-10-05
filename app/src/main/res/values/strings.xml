@@ -27,4 +27,6 @@
     <string name="action_exercise_create">Create Exercise</string>
     <string name="new_exercise">New Exercise</string>
     <string name="action_search">Search</string>
+    <string name="action_add_exercise">Add Exercise</string>
+    <string name="action_cancel_workout">Cancel Workout</string>
 </resources>

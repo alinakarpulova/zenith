@@ -39,43 +39,60 @@
             app:cornerRadius="3dp" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/workout_new_content_layout"
+    <ScrollView
+        android:id="@+id/workout_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="12dp"
-        app:layout_constraintBottom_toBottomOf="@id/workout_new_root"
-        app:layout_constraintEnd_toEndOf="@id/workout_new_root"
-        app:layout_constraintStart_toStartOf="@id/workout_new_root"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/workout_new_topbar_layout">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/workout_name_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="12dp"
-            android:paddingTop="12dp"
-            app:layout_constraintEnd_toEndOf="@id/workout_new_content_layout"
-            app:layout_constraintStart_toStartOf="@id/workout_new_content_layout"
-            app:layout_constraintTop_toTopOf="@id/workout_new_content_layout">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/workout_name_txt"
-                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/workout_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/workout_name_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:paddingHorizontal="12dp"
+                android:paddingTop="12dp">
 
-        <ListView
-            android:id="@+id/workout_new_exercises_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/workout_name_layout"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/workout_name_txt"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/workout_name_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/workout_exercise_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:orientation="vertical" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_exercise_btn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/action_add_exercise"
+                app:cornerRadius="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_workout_btn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/action_cancel_workout"
+                android:textColor="@color/design_default_color_error"
+                app:cornerRadius="4dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

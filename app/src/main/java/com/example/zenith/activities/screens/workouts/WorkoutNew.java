@@ -4,24 +4,35 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zenith.R;
 import com.example.zenith.models.Workout;
+import com.google.android.material.button.MaterialButton;
 
 public class WorkoutNew extends AppCompatActivity {
     Workout workout = new Workout("New Workout");
+    MaterialButton addExerciseButton;
+    LinearLayout exerciseList;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-
-
         setContentView(R.layout.workout_new);
+
+        addExerciseButton = findViewById(R.id.add_exercise_btn);
+        exerciseList = findViewById(R.id.workout_exercise_list);
+
+        addExerciseButton.setOnClickListener((view) -> {
+            exerciseList.addView(new WorkoutRow(this));
+        });
+
     }
+
 
     @Override
     public void onBackPressed() {
