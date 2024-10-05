@@ -42,9 +42,9 @@ public class ExercisesFragment extends Fragment {
         // Inflate the layout for this fragment
         exerciseController = new ExerciseController(new DatabaseHelper(getContext()));
         View view = inflater.inflate(R.layout.exercises_fragment, container, false);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.static_toolbar);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-
+        toolbar.setTitle("Exercises");
         recyclerView = view.findViewById(R.id.exercises_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
