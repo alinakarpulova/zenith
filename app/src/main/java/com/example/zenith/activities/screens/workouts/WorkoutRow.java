@@ -3,7 +3,6 @@ package com.example.zenith.activities.screens.workouts;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -11,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.zenith.R;
+import com.example.zenith.models.ExerciseSet;
 import com.example.zenith.models.WorkoutExercise;
 import com.google.android.material.button.MaterialButton;
 
@@ -35,11 +35,18 @@ public class WorkoutRow extends ConstraintLayout {
         exerciseNameText.setText(workoutExercise.getExercise().getName());
 
         setLayout = findViewById(R.id.workout_exercise_grid);
+        int index = 0;
+        for (ExerciseSet exerciseSet : workoutExercise.getExerciseSets()) {
+            index += 1;
+            setLayout.addView(new WorkoutSetRow(this.getContext(), exerciseSet, index));
 
-        addSetButton = findViewById(R.id.workout_exercise_add_set_btn);
-        addSetButton.setOnClickListener((view) -> {
-            setLayout.addView(new WorkoutSetRow(this.getContext()), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        });
+        }
+
+//        addSetButton = findViewById(R.id.workout_exercise_add_set_btn);
+//        addSetButton.setOnClickListener((view) -> {
+//            int index = workoutExercise.getExerciseSets().size() - 1;
+//            setLayout.addView(new WorkoutSetRow(this.getContext(), workoutExercise.getExerciseSetByIndex(index), index));
+//        });
 
     }
 

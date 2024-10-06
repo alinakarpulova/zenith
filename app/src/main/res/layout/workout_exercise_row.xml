@@ -26,11 +26,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:icon="@drawable/ic_menu_vertical" />
+            android:src="@drawable/ic_menu_vertical" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,29 +45,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:stretchColumns="*">
+            android:weightSum="9">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="@string/label_set"
                     android:textAppearance="@style/TextAppearance.AppCompat.Label" />
 
                 <TextView
-                    android:text="@string/label_previous"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Label" />
-
-                <TextView
-                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
                     android:text="@string/label_lbs"
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Label" />
 
                 <TextView
-                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
                     android:text="@string/label_reps"
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Label" />
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_check_1" />
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_delete" />
             </TableRow>
 
         </TableLayout>

@@ -10,12 +10,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zenith.R;
+import com.example.zenith.components.DialogWithSearchMulti;
 import com.example.zenith.controllers.DatabaseHelper;
 import com.example.zenith.models.Exercise;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WorkoutNew extends AppCompatActivity {
@@ -37,11 +39,23 @@ public class WorkoutNew extends AppCompatActivity {
         addExerciseButton = findViewById(R.id.add_exercise_btn);
         exerciseList = findViewById(R.id.workout_exercise_list);
 
+        DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
+
         addExerciseButton.setOnClickListener((view) -> {
-            WorkoutExercise workoutExercise = new WorkoutExercise(exercises.get(i));
-            i++;
-            exerciseList.addView(new WorkoutRow(this, workoutExercise));
+            exercisesDialog.showDialog(Collections.emptyList());
         });
+
+        exercisesDialog.getDialog().setOnDismissListener((dialogInterface -> {
+            for (Exercise exercise : exercisesDialog.getSelectedItems()) {
+                if (!workout.containsExercise(exercise)) {
+                    WorkoutExercise workoutExercise = new WorkoutExercise(exercise);
+                    workout.addWorkoutExercise(workoutExercise);
+                    exerciseList.addView(new WorkoutRow(WorkoutNew.this, workoutExercise));
+                }
+            }
+
+
+        }));
     }
 
 
@@ -61,6 +75,7 @@ public class WorkoutNew extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, WorkoutNew.class);
