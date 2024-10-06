@@ -15,6 +15,7 @@
     </style>
 
     <color name="iconTint">#ffff</color>
+    <color name="textInputBackground">?attr/colorSurfaceContainer</color>
     <color name="shapeBackground">@color/cardview_dark_background</color>
     <style name="Theme.Zenith" parent="Base.Theme.Zenith" />
 

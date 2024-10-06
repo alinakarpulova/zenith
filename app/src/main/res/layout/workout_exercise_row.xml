@@ -61,6 +61,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="3"
                     android:text="@string/label_lbs"
+
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Label" />
 
