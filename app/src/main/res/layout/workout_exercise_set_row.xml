@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/set_index"
@@ -36,17 +37,21 @@
         android:id="@+id/complete_set_btn"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:background="@color/transparent"
         android:contentDescription="@string/action_complete"
         android:paddingHorizontal="0dp"
         android:paddingVertical="4dp"
-        android:src="@drawable/ic_check_1" />
+        android:src="@drawable/ic_check_1"
+        app:tint="?attr/colorPrimary" />
 
     <ImageButton
         android:id="@+id/delete_set_btn"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:background="@color/transparent"
         android:contentDescription="@string/action_delete"
         android:paddingHorizontal="0dp"
         android:paddingVertical="4dp"
-        android:src="@drawable/ic_delete" />
+        android:src="@drawable/ic_delete"
+        app:tint="?attr/colorError" />
 </merge>

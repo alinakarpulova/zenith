@@ -33,6 +33,16 @@ public class Workout {
         }
     }
 
+    public ArrayList<WorkoutExercise> getWorkoutExerciseList() {
+        return workoutExerciseList;
+    }
+
+    public void removeWorkoutExerciseByIndex(int index) {
+        if (index >= 0 && index < workoutExerciseList.size()) {
+            workoutExerciseList.remove(index);
+        }
+    }
+
     public void removeWorkoutExercise(WorkoutExercise workoutExercise) {
         workoutExerciseList.remove(workoutExercise);
     }

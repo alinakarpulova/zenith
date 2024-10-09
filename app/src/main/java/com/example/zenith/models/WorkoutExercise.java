@@ -5,11 +5,11 @@ import java.util.List;
 
 public class WorkoutExercise {
     private final Exercise exercise;
-    private List<ExerciseSet> exerciseSets;
+    private final List<ExerciseSet> exerciseSets;
 
     public WorkoutExercise(Exercise exercise) {
         this.exercise = exercise;
-        this.exerciseSets = new ArrayList<ExerciseSet>();
+        this.exerciseSets = new ArrayList<>();
         this.exerciseSets.add(new ExerciseSet(0, 0, 0));
     }
 
@@ -22,7 +22,7 @@ public class WorkoutExercise {
     }
 
     public void removeSetByIndex(int index) {
-        if (index > 0 && index < exerciseSets.size()) {
+        if (index >= 0 && index < exerciseSets.size()) {
             exerciseSets.remove(index);
         }
     }

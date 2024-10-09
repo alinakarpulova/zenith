@@ -1,16 +1,19 @@
 package com.example.zenith.activities.screens.workouts;
 
+import static androidx.core.util.TypedValueCompat.dpToPx;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatImageButton;
-
 import com.example.zenith.R;
 import com.example.zenith.models.ExerciseSet;
+import com.google.android.material.color.MaterialColors;
 
 @SuppressLint("ViewConstructor")
 public class WorkoutSetRow extends TableRow {
@@ -18,44 +21,50 @@ public class WorkoutSetRow extends TableRow {
     private final ExerciseSet exerciseSet;
     private int setIndex;
     private TextView setIndexText;
+    private ImageButton completeBtn;
+    private ImageButton deleteBtn;
 
-    public WorkoutSetRow(Context context, ExerciseSet exerciseSet, int setIndex, OnSetCompleteListener onComplete, OnSetRemoveListener onRemove) {
+    public WorkoutSetRow(Context context, ExerciseSet exerciseSet, int setIndex, OnSetRemoveListener onRemove) {
         super(context);
         this.exerciseSet = exerciseSet;
         this.setIndex = setIndex;
-        init(context, onComplete, onRemove);
+        init(context, onRemove);
     }
 
-    public void init(Context context, OnSetCompleteListener onComplete, OnSetRemoveListener onRemove) {
+    public void init(Context context, OnSetRemoveListener onSetRemoveListener) {
         view = LayoutInflater.from(context).inflate(R.layout.workout_exercise_set_row, this, true);
         setIndexText = view.findViewById(R.id.set_index);
         setIndexText.setText(String.valueOf(setIndex));
 
-        AppCompatImageButton completeBtn = view.findViewById(R.id.complete_set_btn);
-        AppCompatImageButton deleteBtn = view.findViewById(R.id.delete_set_btn);
+        int paddingLeft = (int) dpToPx(8, Resources.getSystem().getDisplayMetrics());  // 16dp padding on the left and right
+        view.setPadding(paddingLeft, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+
+
+        completeBtn = view.findViewById(R.id.complete_set_btn);
+        deleteBtn = view.findViewById(R.id.delete_set_btn);
         updateView();
         completeBtn.setOnClickListener((v) -> {
-            onComplete.onComplete(!exerciseSet.isCompleted());
+            exerciseSet.setCompleted(!exerciseSet.isCompleted());
             updateView();
         });
 
         deleteBtn.setOnClickListener((v) -> {
-            onRemove.onRemove();
+            onSetRemoveListener.onRemove();
         });
     }
 
     public void updateView() {
-        System.out.println(exerciseSet.isCompleted());
         if (exerciseSet.isCompleted()) {
-            view.setBackgroundColor(com.google.android.material.R.attr.colorAccent);
+            view.setBackgroundColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorPrimary));
+            setIndexText.setTextColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnPrimary));
+            completeBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnPrimary));
+            deleteBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorErrorContainer));
         } else {
-            view.setBackgroundColor(com.google.android.material.R.attr.colorSurface);
+            view.setBackgroundColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorSurface));
+            setIndexText.setTextColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnSurface));
+            completeBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorPrimary));
+            deleteBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorError));
         }
-    }
-
-    // Interface for completion callback
-    public interface OnSetCompleteListener {
-        void onComplete(boolean completed);
     }
 
     // Interface for remove callback

@@ -26,7 +26,6 @@ public class WorkoutNew extends AppCompatActivity {
     LinearLayout exerciseList;
 
     List<Exercise> exercises;
-    private int i = 0;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -44,18 +43,29 @@ public class WorkoutNew extends AppCompatActivity {
         addExerciseButton.setOnClickListener((view) -> {
             exercisesDialog.showDialog(Collections.emptyList());
         });
-
         exercisesDialog.getDialog().setOnDismissListener((dialogInterface -> {
             for (Exercise exercise : exercisesDialog.getSelectedItems()) {
                 if (!workout.containsExercise(exercise)) {
                     WorkoutExercise workoutExercise = new WorkoutExercise(exercise);
                     workout.addWorkoutExercise(workoutExercise);
-                    exerciseList.addView(new WorkoutRow(WorkoutNew.this, workoutExercise));
                 }
             }
-
-
+            updateExerciseListView();
         }));
+    }
+
+    private void removeWorkoutExercise(WorkoutExercise workoutExercise) {
+        workout.removeWorkoutExercise(workoutExercise);
+        updateExerciseListView();
+    }
+
+    private void updateExerciseListView() {
+        exerciseList.removeAllViews();
+        for (WorkoutExercise workoutExercise : workout.getWorkoutExerciseList()) {
+            exerciseList.addView(new WorkoutRow(WorkoutNew.this, workoutExercise, () -> {
+                removeWorkoutExercise(workoutExercise);
+            }));
+        }
     }
 
 

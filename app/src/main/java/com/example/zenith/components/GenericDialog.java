@@ -56,7 +56,6 @@ public class GenericDialog<T> {
         dialogConfirm.setActivated(false);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             selectedItem = itemList.get(position);
-            System.out.println(selectedItem);
             dialogConfirm.setActivated(true);
         });
 

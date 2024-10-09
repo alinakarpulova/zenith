@@ -9,9 +9,12 @@
         android:id="@+id/workout_new_topbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:elevation="12dp"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
         android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
