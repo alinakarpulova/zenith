@@ -33,6 +33,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Label" />
 
     <ImageButton
+        android:id="@+id/complete_set_btn"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:contentDescription="@string/action_complete"
@@ -41,6 +42,7 @@
         android:src="@drawable/ic_check_1" />
 
     <ImageButton
+        android:id="@+id/delete_set_btn"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:contentDescription="@string/action_delete"

@@ -21,6 +21,12 @@ public class WorkoutExercise {
         return exerciseSets.get(index);
     }
 
+    public void removeSetByIndex(int index) {
+        if (index > 0 && index < exerciseSets.size()) {
+            exerciseSets.remove(index);
+        }
+    }
+
     public List<ExerciseSet> getExerciseSets() {
         return this.exerciseSets;
     }

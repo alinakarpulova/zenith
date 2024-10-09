@@ -35,19 +35,35 @@ public class WorkoutRow extends ConstraintLayout {
         exerciseNameText.setText(workoutExercise.getExercise().getName());
 
         setLayout = findViewById(R.id.workout_exercise_grid);
+        updateView();
+
+        addSetButton = findViewById(R.id.workout_exercise_add_set_btn);
+        addSetButton.setOnClickListener((view) -> {
+            workoutExercise.getExerciseSets().add(new ExerciseSet(0, 0f));
+            updateView();
+        });
+
+    }
+
+    private void removeSet(int index) {
+        workoutExercise.removeSetByIndex(index);
+    }
+
+    private void completeSet(int index, boolean completed) {
+        workoutExercise.getExerciseSetByIndex(index).setCompleted(completed);
+    }
+
+    private void updateView() {
+        setLayout.removeAllViews();
         int index = 0;
         for (ExerciseSet exerciseSet : workoutExercise.getExerciseSets()) {
+            int currentIndex = index;  // Keep track of the current index for callback
             index += 1;
-            setLayout.addView(new WorkoutSetRow(this.getContext(), exerciseSet, index));
-
+            setLayout.addView(new WorkoutSetRow(this.getContext(), exerciseSet, index, (completed) -> completeSet(currentIndex, completed), () -> {
+                removeSet(currentIndex);
+                updateView();
+            }));
         }
-
-//        addSetButton = findViewById(R.id.workout_exercise_add_set_btn);
-//        addSetButton.setOnClickListener((view) -> {
-//            int index = workoutExercise.getExerciseSets().size() - 1;
-//            setLayout.addView(new WorkoutSetRow(this.getContext(), workoutExercise.getExerciseSetByIndex(index), index));
-//        });
-
     }
 
 }

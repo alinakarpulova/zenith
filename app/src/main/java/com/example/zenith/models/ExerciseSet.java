@@ -6,6 +6,11 @@ public class ExerciseSet {
     private float weight;
     private boolean completed;
 
+    public ExerciseSet(int repetitions, float weight) {
+        this.repetitions = repetitions;
+        this.weight = weight;
+    }
+
     public ExerciseSet(int id, int repetitions, float weight) {
         this.id = id;
         this.repetitions = repetitions;
@@ -20,7 +25,16 @@ public class ExerciseSet {
         return this.repetitions;
     }
 
-    void setWeight(float weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
