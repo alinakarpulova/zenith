@@ -31,4 +31,5 @@
     <string name="action_cancel_workout">Cancel Workout</string>
     <string name="action_complete">Action Complete</string>
     <string name="action_delete">Action Delete</string>
+    <string name="exercise_image_txt">Exercise Image</string>
 </resources>

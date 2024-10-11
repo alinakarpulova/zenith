@@ -23,6 +23,7 @@ import java.util.List;
 public class WorkoutNew extends AppCompatActivity {
     Workout workout = new Workout("New Workout");
     MaterialButton addExerciseButton;
+    MaterialButton cancelWorkoutButton;
     LinearLayout exerciseList;
 
     List<Exercise> exercises;
@@ -35,10 +36,15 @@ public class WorkoutNew extends AppCompatActivity {
 
         exercises = new DatabaseHelper(this).getExerciseList();
 
+        cancelWorkoutButton = findViewById(R.id.cancel_workout_btn);
         addExerciseButton = findViewById(R.id.add_exercise_btn);
         exerciseList = findViewById(R.id.workout_exercise_list);
 
         DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
+
+        cancelWorkoutButton.setOnClickListener((view) -> {
+            cancelWorkout();
+        });
 
         addExerciseButton.setOnClickListener((view) -> {
             exercisesDialog.showDialog(Collections.emptyList());
@@ -68,10 +74,7 @@ public class WorkoutNew extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public void onBackPressed() {
-        // Temporary prevent exit from active workout
+    private void cancelWorkout(){
         new AlertDialog.Builder(this)
                 .setTitle("Exit Confirmation")
                 .setMessage("Are you sure you want cancel the workout?")
@@ -84,6 +87,11 @@ public class WorkoutNew extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        cancelWorkout();
     }
 
 

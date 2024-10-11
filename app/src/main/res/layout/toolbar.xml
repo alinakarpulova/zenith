@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:theme="@style/ToolbarColoredIcons"
-    app:title="Title">
+    android:elevation="12dp"
+    android:background="?attr/colorSurface"
+    app:title="Title"
+    android:id="@+id/toolbar">
 
 </androidx.appcompat.widget.Toolbar>
