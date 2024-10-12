@@ -32,4 +32,8 @@
     <string name="action_complete">Action Complete</string>
     <string name="action_delete">Action Delete</string>
     <string name="exercise_image_txt">Exercise Image</string>
+    <string name="sample_category">Sample Category</string>
+    <string name="sample_body_part">Sample Body Part</string>
+    <string name="exercise_instructions">Instructions</string>
+    <string name="sample_instructions_txt">Sample Instructions</string>
 </resources>
