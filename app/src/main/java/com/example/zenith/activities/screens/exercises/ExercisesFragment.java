@@ -57,7 +57,6 @@ public class ExercisesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         updateList();
 
         MenuHost menuHost = requireActivity();

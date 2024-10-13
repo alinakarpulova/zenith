@@ -6,12 +6,19 @@ import java.util.ArrayList;
 
 
 public class Workout {
+    private int id;
     private String name;
-    private String note;
-    private final LocalDateTime startTime;
+    private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     private ArrayList<WorkoutExercise> workoutExerciseList;
+
+    public Workout(int id, String name, LocalDateTime startTime, LocalDateTime endTime) {
+        this.id = id;
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
     public Workout(String name) {
         this.name = name;
@@ -41,6 +48,14 @@ public class Workout {
         if (index >= 0 && index < workoutExerciseList.size()) {
             workoutExerciseList.remove(index);
         }
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime(){
+        return endTime;
     }
 
     public void removeWorkoutExercise(WorkoutExercise workoutExercise) {

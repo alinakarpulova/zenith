@@ -25,6 +25,10 @@ public class ExerciseSet {
         return this.repetitions;
     }
 
+    public float getWeight(){
+        return weight;
+    }
+
     public void setWeight(float weight) {
         this.weight = weight;
     }

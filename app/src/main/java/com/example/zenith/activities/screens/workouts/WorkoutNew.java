@@ -24,6 +24,7 @@ public class WorkoutNew extends AppCompatActivity {
     Workout workout = new Workout("New Workout");
     MaterialButton addExerciseButton;
     MaterialButton cancelWorkoutButton;
+    MaterialButton finishWorkoutButton;
     LinearLayout exerciseList;
 
     List<Exercise> exercises;
@@ -33,12 +34,13 @@ public class WorkoutNew extends AppCompatActivity {
         super.onCreate(savedInstance);
 
         setContentView(R.layout.workout_new);
-
-        exercises = new DatabaseHelper(this).getExerciseList();
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        exercises = dbHelper.getExerciseList();
 
         cancelWorkoutButton = findViewById(R.id.cancel_workout_btn);
         addExerciseButton = findViewById(R.id.add_exercise_btn);
         exerciseList = findViewById(R.id.workout_exercise_list);
+        finishWorkoutButton = findViewById(R.id.workout_complete_btn);
 
         DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
 
@@ -58,6 +60,11 @@ public class WorkoutNew extends AppCompatActivity {
             }
             updateExerciseListView();
         }));
+
+        finishWorkoutButton.setOnClickListener((view) -> {
+            dbHelper.saveWorkout(workout);
+            finish();
+        });
     }
 
     private void removeWorkoutExercise(WorkoutExercise workoutExercise) {
@@ -74,7 +81,7 @@ public class WorkoutNew extends AppCompatActivity {
         }
     }
 
-    private void cancelWorkout(){
+    private void cancelWorkout() {
         new AlertDialog.Builder(this)
                 .setTitle("Exit Confirmation")
                 .setMessage("Are you sure you want cancel the workout?")

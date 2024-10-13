@@ -9,6 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.zenith.models.Exercise;
 import com.example.zenith.models.ExerciseBodyPart;
 import com.example.zenith.models.ExerciseCategory;
+import com.example.zenith.models.ExerciseSet;
+import com.example.zenith.models.Workout;
+import com.example.zenith.models.WorkoutExercise;
+
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -108,6 +115,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exercises;
+    }
+
+    public List<Workout> getWorkoutList() {
+        List<Workout> workouts = new ArrayList<>();
+        String query = "SELECT * FROM workouts";
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                LocalDateTime startTime = convertEpochToLocalDateTime(cursor.getInt(2));
+                LocalDateTime endTime = convertEpochToLocalDateTime(cursor.getInt(3));
+                workouts.add(new Workout(id, name, startTime, endTime));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return workouts;
+    }
+
+    private LocalDateTime convertEpochToLocalDateTime(long epochMillis) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMillis), ZoneId.systemDefault());
+    }
+
+    public void saveWorkout(Workout workout) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        List<WorkoutExercise> workoutExercises = workout.getWorkoutExerciseList();
+        // Start transaction, only save the records if no errors occur, otherwise roll back
+        db.beginTransaction();
+        try {
+            // Save workout
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseDefs.WORKOUT_NAME, workout.getName());
+//        contentValues.put(DatabaseDefs.WORKOUT_START, workout.getStartTime().toString());
+            int workout_id = (int) db.insert(DatabaseDefs.WORKOUT_TABLE, null, contentValues);
+            System.out.println("Saved workout " + workout_id);
+            // Save workout exercises
+
+            for (WorkoutExercise workoutExercise : workoutExercises) {
+                contentValues = new ContentValues();
+                contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_EXERCISE, workoutExercise.getExercise().getId());
+                contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_WORKOUT, workout_id);
+                int workout_exercise_id = (int) db.insert(DatabaseDefs.WORKOUT_EXERCISE_TABLE, null, contentValues);
+
+                for (ExerciseSet exerciseSet : workoutExercise.getExerciseSets()) {
+                    contentValues = new ContentValues();
+                    contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_SET_REPS, exerciseSet.getRepetitions());
+                    contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_SET_WEIGHT, exerciseSet.getWeight());
+                    contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_SET_COMPLETED, exerciseSet.isCompleted());
+                    contentValues.put(DatabaseDefs.WORKOUT_EXERCISE_SET_WORKOUT_EXERCISE, workout_exercise_id);
+                    db.insert(DatabaseDefs.WORKOUT_EXERCISE_SET_TABLE, null, contentValues);
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public void addExercise(Exercise exercise) {

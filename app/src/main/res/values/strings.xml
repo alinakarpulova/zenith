@@ -36,4 +36,9 @@
     <string name="sample_body_part">Sample Body Part</string>
     <string name="exercise_instructions">Instructions</string>
     <string name="sample_instructions_txt">Sample Instructions</string>
+    <string name="quick_start">Quick Start</string>
+    <string name="previous_workouts">Previous Workouts</string>
+    <string name="workout_name_placeholder">Workout Name PlaceHolder</string>
+    <string name="start_time_placeholder">Start Time Placeholder</string>
+    <string name="end_time_placeholder">End Time Placeholder</string>
 </resources>
