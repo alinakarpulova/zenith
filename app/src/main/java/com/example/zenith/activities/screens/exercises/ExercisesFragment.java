@@ -20,6 +20,7 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,7 @@ public class ExercisesFragment extends Fragment {
         toolbar.setTitle("Exercises");
         recyclerView = view.findViewById(R.id.exercises_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL));
 
         return view;
     }
