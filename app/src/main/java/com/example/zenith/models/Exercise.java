@@ -20,7 +20,7 @@ public class Exercise {
     }
 
 
-    public Exercise(@Nullable Integer id, String name, String image,String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
+    public Exercise(@Nullable Integer id, String name, String image, String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
         if (id != null) {
             this.id = id;
         }
@@ -44,8 +44,13 @@ public class Exercise {
         this.exerciseBodyPart = exerciseBodyPart;
     }
 
-    public String getInstructions(){
+    public String getInstructions() {
         return instructions;
+    }
+
+
+    public String getImage() {
+        return this.image;
     }
 
     public String getName() {

@@ -37,10 +37,10 @@ public class ExerciseDetails extends AppCompatActivity {
 
 
         ImageView imageView = findViewById(R.id.exercise_details_img);
-
+        String image = "file:///android_asset/gifs/" + exercise.getImage();
         Glide.with(this)
                 .asGif()
-                .load("file:///android_asset/gifs/0001.gif") // Use the correct URI
+                .load(image)
                 .into(imageView);
 
     }
