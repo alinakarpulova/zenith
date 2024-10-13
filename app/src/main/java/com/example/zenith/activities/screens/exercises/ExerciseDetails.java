@@ -1,7 +1,5 @@
 package com.example.zenith.activities.screens.exercises;
 
-import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,13 +7,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.zenith.R;
 import com.example.zenith.controllers.DatabaseHelper;
 import com.example.zenith.models.Exercise;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLSyntaxErrorException;
 
 public class ExerciseDetails extends AppCompatActivity {
     public static String EXERCISE_ID = "EXERCISE_ID";
@@ -40,17 +35,13 @@ public class ExerciseDetails extends AppCompatActivity {
         instructions.setText(exercise.getInstructions());
         title.setTitle(exercise.getName());
 
-        AssetManager assetManager = getAssets();
-        InputStream inputStream = null;
-        try {
-            inputStream = assetManager.open("gifs/0001.gif");
-            System.out.println("GIF FOUND");
-        } catch (IOException e) {
-            System.out.println("CANNOT FIND GIF");
-            throw new RuntimeException(e);
-        }
-        Drawable drawable = Drawable.createFromStream(inputStream, null);
+
         ImageView imageView = findViewById(R.id.exercise_details_img);
-        imageView.setImageDrawable(drawable);
+
+        Glide.with(this)
+                .asGif()
+                .load("file:///android_asset/gifs/0001.gif") // Use the correct URI
+                .into(imageView);
+
     }
 }
