@@ -1,5 +1,7 @@
 package com.example.zenith.activities.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
+import com.example.zenith.activities.screens.exercises.ExerciseDetails;
 import com.example.zenith.models.Exercise;
 
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
     Exercise[] exercises;
     private Filter filter;
     private List<Exercise> filteredExercises; // List for filtered results
-
+    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
@@ -49,9 +52,15 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
         }
     }
 
-    public ExerciseRowAdapter(Exercise[] exercises) {
+    public ExerciseRowAdapter(Exercise[] exercises, Context context) {
         this.exercises = exercises;
         this.filteredExercises = new ArrayList<>(List.of(exercises));
+        this.context = context;
+    }
+
+    // Interface for click events
+    public interface OnExerciseClickListener {
+        void onExerciseClick(Exercise exercise); // Method called when an item is clicked
     }
 
     // Create new views (invoked by the layout manager)
@@ -69,7 +78,17 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.getName().setText(filteredExercises.get(position).getName());
         viewHolder.getLabel().setText(filteredExercises.get(position).getExerciseCategory().toString());
+
+        // Set click listener on the itemView
+        viewHolder.itemView.setOnClickListener(v -> {
+            // Start the new activity
+            Intent intent = new Intent(context, ExerciseDetails.class);
+            // Pass necessary data (e.g., exercise ID or other data)
+            intent.putExtra(ExerciseDetails.EXERCISE_ID, filteredExercises.get(position).getId());
+            context.startActivity(intent);  // Start the activity
+        });
     }
+
 
     @Override
     public long getItemId(int i) {

@@ -111,7 +111,7 @@ public class ExercisesFragment extends Fragment {
 
 
     private void updateList() {
-        adapter = new ExerciseRowAdapter(exerciseController.getExerciseList().toArray(new Exercise[0]));
+        adapter = new ExerciseRowAdapter(exerciseController.getExerciseList().toArray(new Exercise[0]), getContext());
         recyclerView.setAdapter(adapter);
     }
 

@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".activities.screens.exercises.ExerciseNew" />
         <activity android:name=".activities.screens.workouts.WorkoutNew" />
+        <activity android:name=".activities.screens.exercises.ExerciseDetails"/>
     </application>
 
 

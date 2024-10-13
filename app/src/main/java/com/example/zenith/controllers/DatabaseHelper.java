@@ -58,6 +58,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public Exercise getExercise(int id) {
+        String query = "SELECT * FROM exercises WHERE ID=?";
+        SQLiteDatabase db = getReadableDatabase();
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        Exercise exercise = null;
+        if (cursor.moveToFirst()) {
+            int fetched_id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String image = cursor.getString(2);
+            String instructions = cursor.getString(3);
+            ExerciseCategory category = ExerciseCategory.fromString(cursor.getString(4));
+            ExerciseBodyPart bodyPart = ExerciseBodyPart.fromString(cursor.getString(5));
+            boolean deletable = cursor.getInt(6) == 1;
+            exercise = new Exercise(fetched_id, name, image, instructions, bodyPart, category, deletable);
+            System.out.println(exercise);
+
+        }
+        cursor.close();
+        db.close();
+
+        return exercise;
+    }
+
     public List<Exercise> getExerciseList() {
         List<Exercise> exercises = new ArrayList<>();
 

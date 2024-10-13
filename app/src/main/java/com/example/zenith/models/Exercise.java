@@ -44,6 +44,10 @@ public class Exercise {
         this.exerciseBodyPart = exerciseBodyPart;
     }
 
+    public String getInstructions(){
+        return instructions;
+    }
+
     public String getName() {
         return name;
     }
