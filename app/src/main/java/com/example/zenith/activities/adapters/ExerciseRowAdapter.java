@@ -2,6 +2,8 @@ package com.example.zenith.activities.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import com.example.zenith.R;
 import com.example.zenith.activities.screens.exercises.ExerciseDetails;
 import com.example.zenith.models.Exercise;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +83,16 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
         viewHolder.getName().setText(filteredExercises.get(position).getName());
         viewHolder.getLabel().setText(filteredExercises.get(position).getExerciseCategory().toString());
 
+        AssetManager assetManager = context.getAssets();
+        InputStream inputStream = null;
+        try {
+            inputStream = assetManager.open("gifs/" + filteredExercises.get(position).getImage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Drawable drawable = Drawable.createFromStream(inputStream, null);
+
+        viewHolder.getImage().setImageDrawable(drawable);
         // Set click listener on the itemView
         viewHolder.itemView.setOnClickListener(v -> {
             // Start the new activity
