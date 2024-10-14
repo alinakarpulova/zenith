@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +18,7 @@ import com.example.zenith.models.Exercise;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,13 +29,13 @@ public class WorkoutNew extends AppCompatActivity {
     MaterialButton cancelWorkoutButton;
     MaterialButton finishWorkoutButton;
     LinearLayout exerciseList;
+    TextInputEditText workoutNameText;
 
     List<Exercise> exercises;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-
         setContentView(R.layout.workout_new);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         exercises = dbHelper.getExerciseList();
@@ -41,7 +44,14 @@ public class WorkoutNew extends AppCompatActivity {
         addExerciseButton = findViewById(R.id.add_exercise_btn);
         exerciseList = findViewById(R.id.workout_exercise_list);
         finishWorkoutButton = findViewById(R.id.workout_complete_btn);
+        workoutNameText = findViewById(R.id.workout_name_txt);
 
+        setupListeners(dbHelper);
+
+
+    }
+
+    private void setupListeners(DatabaseHelper dbHelper) {
         DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
 
         cancelWorkoutButton.setOnClickListener((view) -> {
@@ -60,6 +70,21 @@ public class WorkoutNew extends AppCompatActivity {
             }
             updateExerciseListView();
         }));
+
+        workoutNameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                workout.setName(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         finishWorkoutButton.setOnClickListener((view) -> {
             dbHelper.saveWorkout(workout);
