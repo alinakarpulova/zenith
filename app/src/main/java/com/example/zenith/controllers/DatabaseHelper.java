@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Workout> getWorkoutList() {
         List<Workout> workouts = new ArrayList<>();
-        String query = "SELECT * FROM workouts";
+        String query = "SELECT * FROM workouts order by startTime desc";
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -128,8 +128,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
-                LocalDateTime startTime = convertEpochToLocalDateTime(cursor.getInt(2));
-                LocalDateTime endTime = convertEpochToLocalDateTime(cursor.getInt(3));
+                LocalDateTime startTime = LocalDateTime.parse(cursor.getString(2));
+                LocalDateTime endTime = LocalDateTime.parse(cursor.getString(3));
                 workouts.add(new Workout(id, name, startTime, endTime));
             } while (cursor.moveToNext());
         }
@@ -138,9 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
-    private LocalDateTime convertEpochToLocalDateTime(long epochMillis) {
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMillis), ZoneId.systemDefault());
-    }
 
     public void saveWorkout(Workout workout) {
         SQLiteDatabase db = getWritableDatabase();
@@ -152,7 +149,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Save workout
             ContentValues contentValues = new ContentValues();
             contentValues.put(DatabaseDefs.WORKOUT_NAME, workout.getName());
-//        contentValues.put(DatabaseDefs.WORKOUT_START, workout.getStartTime().toString());
+            contentValues.put(DatabaseDefs.WORKOUT_START, workout.getStartTime().toString());
+            contentValues.put(DatabaseDefs.WORKOUT_END, LocalDateTime.now().toString());
             int workout_id = (int) db.insert(DatabaseDefs.WORKOUT_TABLE, null, contentValues);
             System.out.println("Saved workout " + workout_id);
             // Save workout exercises
