@@ -126,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "   LEFT JOIN workout_exercises we ON w.id = we.workout_id\n" +
                 "   LEFT JOIN exercises e ON we.exercise_id = e.id\n" +
                 "   LEFT JOIN workout_exercise_sets wes ON we.id = wes.workout_exercise_id\n" +
-                "   ORDER BY w.startTime DESC;";
+                "   ORDER BY w.endTime DESC;";
 
 
         SQLiteDatabase db = getReadableDatabase();
