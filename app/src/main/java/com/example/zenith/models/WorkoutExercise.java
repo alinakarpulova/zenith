@@ -21,6 +21,10 @@ public class WorkoutExercise {
         return exerciseSets.get(index);
     }
 
+    public void addSet(ExerciseSet exerciseSet){
+        this.exerciseSets.add(exerciseSet);
+    }
+
     public void removeSetByIndex(int index) {
         if (index >= 0 && index < exerciseSets.size()) {
             exerciseSets.remove(index);

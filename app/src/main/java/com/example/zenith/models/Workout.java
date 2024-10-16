@@ -11,7 +11,7 @@ public class Workout {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    private ArrayList<WorkoutExercise> workoutExerciseList;
+    private ArrayList<WorkoutExercise> workoutExerciseList = new ArrayList<>();
 
     public Workout(int id, String name, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
@@ -23,7 +23,6 @@ public class Workout {
     public Workout(String name) {
         this.name = name;
         this.startTime = LocalDateTime.now();
-        workoutExerciseList = new ArrayList<>();
     }
 
     public String getName() {
@@ -54,7 +53,7 @@ public class Workout {
         return startTime;
     }
 
-    public LocalDateTime getEndTime(){
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 

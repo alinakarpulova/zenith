@@ -58,7 +58,6 @@ public class WorkoutsFragment extends Fragment {
     }
 
     private void updateList() {
-        System.out.println("Updating view");
         ArrayList<Workout> workouts = (ArrayList<Workout>) databaseHelper.getWorkoutList();
         SimpleWorkoutAdapter itemsAdapter = new SimpleWorkoutAdapter(getContext(), workouts);
         workoutHistoryList.setAdapter(itemsAdapter);

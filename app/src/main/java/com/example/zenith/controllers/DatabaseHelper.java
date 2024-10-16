@@ -13,16 +13,16 @@ import com.example.zenith.models.ExerciseSet;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
 
-import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.ZoneId;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -82,8 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ExerciseBodyPart bodyPart = ExerciseBodyPart.fromString(cursor.getString(5));
             boolean deletable = cursor.getInt(6) == 1;
             exercise = new Exercise(fetched_id, name, image, instructions, bodyPart, category, deletable);
-            System.out.println(exercise);
-
         }
         cursor.close();
         db.close();
@@ -119,22 +117,81 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Workout> getWorkoutList() {
         List<Workout> workouts = new ArrayList<>();
-        String query = "SELECT * FROM workouts order by startTime desc";
-        SQLiteDatabase db = getReadableDatabase();
+        String query = "        SELECT w.id as workoutId, w.name as workoutName, w.startTime, w.endTime,\n" +
+                "               e.id as exerciseId, e.name as exerciseName, e.image, e.instructions, e.exerciseCategory, e.exerciseBodyPart,\n" +
+                "               we.id as workoutExerciseId,\n" +
+                "               wes.id as setId, wes.weight, wes.repetitions, wes.completed\n" +
+                "        FROM workouts w\n" +
+                "        LEFT JOIN workout_exercises we ON w.id = we.workout_id\n" +
+                "        LEFT JOIN exercises e ON we.exercise_id = e.id\n" +
+                "        LEFT JOIN workout_exercise_sets wes ON we.id = wes.workout_exercise_id\n" +
+                "        ORDER BY w.startTime DESC";
 
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
+        Map<Integer, Workout> workoutMap = new HashMap<>();
+        Map<Integer, WorkoutExercise> workoutExerciseMap = new HashMap<>();
+
 
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                LocalDateTime startTime = LocalDateTime.parse(cursor.getString(2));
-                LocalDateTime endTime = LocalDateTime.parse(cursor.getString(3));
-                workouts.add(new Workout(id, name, startTime, endTime));
+                // Extract workout data
+                int workoutId = cursor.getInt(cursor.getColumnIndexOrThrow("workoutId"));
+                String workoutName = cursor.getString(cursor.getColumnIndexOrThrow("workoutName"));
+                LocalDateTime startTime = LocalDateTime.parse(cursor.getString(cursor.getColumnIndexOrThrow("startTime")));
+                LocalDateTime endTime = LocalDateTime.parse(cursor.getString(cursor.getColumnIndexOrThrow("endTime")));
+
+                Workout workout = workoutMap.getOrDefault(workoutId, new Workout(workoutId, workoutName, startTime, endTime));
+
+                // Extract workout exercise data
+                int workoutExerciseId = cursor.getInt(cursor.getColumnIndexOrThrow("workoutExerciseId"));
+                WorkoutExercise workoutExercise = workoutExerciseMap.get(workoutExerciseId);
+
+                if (workoutExerciseId > 0 && workoutExercise == null ) {
+                    // Extract exercise data
+                    int exerciseId = cursor.getInt(cursor.getColumnIndexOrThrow("exerciseId"));
+                    String exerciseName = cursor.getString(cursor.getColumnIndexOrThrow("exerciseName"));
+                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+                    String instructions = cursor.getString(cursor.getColumnIndexOrThrow("instructions"));
+
+                    String exerciseCategoryStr = cursor.getString(cursor.getColumnIndexOrThrow("exerciseCategory"));
+                    ExerciseCategory exerciseCategory = ExerciseCategory.fromString(exerciseCategoryStr);
+
+                    String exerciseBodyPartStr = cursor.getString(cursor.getColumnIndexOrThrow("exerciseBodyPart"));
+                    ExerciseBodyPart exerciseBodyPart = ExerciseBodyPart.fromString(exerciseBodyPartStr);
+
+                    // Create exercise object
+                    Exercise exercise = new Exercise(exerciseId, exerciseName, image, instructions, exerciseCategory, exerciseBodyPart);
+
+                    // Create workout exercise object
+                    workoutExercise = new WorkoutExercise(exercise);
+                    workoutExerciseMap.put(workoutExerciseId, workoutExercise);
+
+                    // Add workout exercise to workout
+                    workout.addWorkoutExercise(workoutExercise);
+                }
+
+                // Extract set data
+                int setId = cursor.getInt(cursor.getColumnIndexOrThrow("setId"));
+                if (setId > 0) {
+                    float weight = cursor.getFloat(cursor.getColumnIndexOrThrow("weight"));
+                    int repetitions = cursor.getInt(cursor.getColumnIndexOrThrow("repetitions"));
+                    boolean completed = cursor.getInt(cursor.getColumnIndexOrThrow("completed")) > 0;
+                    ExerciseSet set = new ExerciseSet(setId, repetitions, weight);
+
+                    // Add set to workout exercise
+                    workoutExercise.addSet(set);
+                }
+
+                workoutMap.put(workoutId, workout);
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         db.close();
+
+        workouts.addAll(workoutMap.values());
+
         return workouts;
     }
 
@@ -152,7 +209,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(DatabaseDefs.WORKOUT_START, workout.getStartTime().toString());
             contentValues.put(DatabaseDefs.WORKOUT_END, LocalDateTime.now().toString());
             int workout_id = (int) db.insert(DatabaseDefs.WORKOUT_TABLE, null, contentValues);
-            System.out.println("Saved workout " + workout_id);
             // Save workout exercises
 
             for (WorkoutExercise workoutExercise : workoutExercises) {

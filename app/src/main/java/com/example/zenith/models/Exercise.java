@@ -19,6 +19,12 @@ public class Exercise {
         this.deletable = deletable != null ? deletable : false;
     }
 
+    public Exercise(int id, String name, String image, String instructions,ExerciseCategory category, ExerciseBodyPart bodyPart) {
+        this.name = name;
+        this.exerciseCategory = category;
+        this.exerciseBodyPart = bodyPart;
+    }
+
 
     public Exercise(@Nullable Integer id, String name, String image, String description, ExerciseBodyPart exerciseBodyPart, ExerciseCategory exerciseCategory, boolean deletable) {
         if (id != null) {

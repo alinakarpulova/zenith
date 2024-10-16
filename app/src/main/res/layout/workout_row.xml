@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp">
 
     <TextView
         android:id="@+id/workout_name"
@@ -19,32 +21,33 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_history"
+            android:src="@drawable/ic_time"
             app:tint="?attr/colorOnSurface" />
+
         <TextView
-            android:id="@+id/workout_start_time"
-            android:layout_width="match_parent"
+            android:id="@+id/workout_duration"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/start_time_placeholder"
             android:textAppearance="@style/TextAppearance.AppCompat.Label" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_history"
-            app:tint="?attr/colorOnSurface" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/workout_end_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/end_time_placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Label" />
-    </LinearLayout>
+            android:text="@string/route_exercises" />
 
+        <LinearLayout
+            android:id="@+id/workout_row_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
 </LinearLayout>

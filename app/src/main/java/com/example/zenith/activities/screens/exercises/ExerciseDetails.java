@@ -23,7 +23,6 @@ public class ExerciseDetails extends AppCompatActivity {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         Exercise exercise = databaseHelper.getExercise(id);
-        System.out.println(exercise);
         setContentView(R.layout.exercise_details_view);
 
         Toolbar title = findViewById(R.id.toolbar);
