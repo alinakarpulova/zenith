@@ -19,7 +19,8 @@ public class Exercise {
         this.deletable = deletable != null ? deletable : false;
     }
 
-    public Exercise(int id, String name, String image, String instructions,ExerciseCategory category, ExerciseBodyPart bodyPart) {
+    public Exercise(int id, String name,ExerciseCategory category, ExerciseBodyPart bodyPart) {
+        this.id = id;
         this.name = name;
         this.exerciseCategory = category;
         this.exerciseBodyPart = bodyPart;

@@ -25,6 +25,8 @@ public class WorkoutExerciseRow extends LinearLayout {
         TextView sets = view.findViewById(R.id.workout_row_exercise_sets);
 
         name.setText(workoutExercise.getExercise().getName());
+        System.out.println(workoutExercise.getExerciseSets());
+        System.out.println(workoutExercise.getExerciseSets().get(1).getRepetitions());
         String setsText = workoutExercise.getExerciseSets().size() + "x" + workoutExercise.getExerciseSets().get(0).getRepetitions();
         sets.setText(setsText);
     }

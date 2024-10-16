@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutExercise {
-    private final Exercise exercise;
+    private int id;
+    private Exercise exercise;
     private final List<ExerciseSet> exerciseSets;
+
+    public WorkoutExercise(int id, Exercise exercise) {
+        this.id = id;
+        this.exercise = exercise;
+        this.exerciseSets = new ArrayList<>();
+    }
 
     public WorkoutExercise(Exercise exercise) {
         this.exercise = exercise;
@@ -21,7 +28,7 @@ public class WorkoutExercise {
         return exerciseSets.get(index);
     }
 
-    public void addSet(ExerciseSet exerciseSet){
+    public void addSet(ExerciseSet exerciseSet) {
         this.exerciseSets.add(exerciseSet);
     }
 
@@ -33,5 +40,9 @@ public class WorkoutExercise {
 
     public List<ExerciseSet> getExerciseSets() {
         return this.exerciseSets;
+    }
+
+    public int getId() {
+        return id;
     }
 }

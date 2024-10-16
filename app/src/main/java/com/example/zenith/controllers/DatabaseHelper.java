@@ -117,21 +117,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Workout> getWorkoutList() {
         List<Workout> workouts = new ArrayList<>();
-        String query = "        SELECT w.id as workoutId, w.name as workoutName, w.startTime, w.endTime,\n" +
-                "               e.id as exerciseId, e.name as exerciseName, e.image, e.instructions, e.exerciseCategory, e.exerciseBodyPart,\n" +
-                "               we.id as workoutExerciseId,\n" +
-                "               wes.id as setId, wes.weight, wes.repetitions, wes.completed\n" +
-                "        FROM workouts w\n" +
-                "        LEFT JOIN workout_exercises we ON w.id = we.workout_id\n" +
-                "        LEFT JOIN exercises e ON we.exercise_id = e.id\n" +
-                "        LEFT JOIN workout_exercise_sets wes ON we.id = wes.workout_exercise_id\n" +
-                "        ORDER BY w.startTime DESC";
+
+        String query = "SELECT w.id as workoutId, w.name as workoutName, w.startTime, w.endTime,\n" +
+                "   we.id as workoutExerciseId,\n" +
+                "   e.id as exerciseId, e.name as exerciseName, e.image, e.instructions, e.exerciseCategory, e.exerciseBodyPart,\n" +
+                "   wes.id as setId, wes.weight, wes.repetitions, wes.completed\n" +
+                "   FROM workouts w\n" +
+                "   LEFT JOIN workout_exercises we ON w.id = we.workout_id\n" +
+                "   LEFT JOIN exercises e ON we.exercise_id = e.id\n" +
+                "   LEFT JOIN workout_exercise_sets wes ON we.id = wes.workout_exercise_id\n" +
+                "   ORDER BY w.startTime DESC;";
+
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
+
         Map<Integer, Workout> workoutMap = new HashMap<>();
         Map<Integer, WorkoutExercise> workoutExerciseMap = new HashMap<>();
-
 
         if (cursor.moveToFirst()) {
             do {
@@ -145,29 +147,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 // Extract workout exercise data
                 int workoutExerciseId = cursor.getInt(cursor.getColumnIndexOrThrow("workoutExerciseId"));
+
+                // Only create a new WorkoutExercise if it's not already in the workout
                 WorkoutExercise workoutExercise = workoutExerciseMap.get(workoutExerciseId);
 
-                if (workoutExerciseId > 0 && workoutExercise == null ) {
+                if (workoutExerciseId > 0 && workoutExercise == null) {
                     // Extract exercise data
                     int exerciseId = cursor.getInt(cursor.getColumnIndexOrThrow("exerciseId"));
                     String exerciseName = cursor.getString(cursor.getColumnIndexOrThrow("exerciseName"));
-                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
-                    String instructions = cursor.getString(cursor.getColumnIndexOrThrow("instructions"));
-
+                    System.out.println(exerciseName);
+                    // Convert string values to enums
                     String exerciseCategoryStr = cursor.getString(cursor.getColumnIndexOrThrow("exerciseCategory"));
                     ExerciseCategory exerciseCategory = ExerciseCategory.fromString(exerciseCategoryStr);
 
                     String exerciseBodyPartStr = cursor.getString(cursor.getColumnIndexOrThrow("exerciseBodyPart"));
                     ExerciseBodyPart exerciseBodyPart = ExerciseBodyPart.fromString(exerciseBodyPartStr);
 
-                    // Create exercise object
-                    Exercise exercise = new Exercise(exerciseId, exerciseName, image, instructions, exerciseCategory, exerciseBodyPart);
+                    Exercise exercise = new Exercise(exerciseId, exerciseName, exerciseCategory, exerciseBodyPart);
 
-                    // Create workout exercise object
-                    workoutExercise = new WorkoutExercise(exercise);
+                    workoutExercise = new WorkoutExercise(workoutExerciseId, exercise);
                     workoutExerciseMap.put(workoutExerciseId, workoutExercise);
-
-                    // Add workout exercise to workout
                     workout.addWorkoutExercise(workoutExercise);
                 }
 
@@ -176,10 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (setId > 0) {
                     float weight = cursor.getFloat(cursor.getColumnIndexOrThrow("weight"));
                     int repetitions = cursor.getInt(cursor.getColumnIndexOrThrow("repetitions"));
-                    boolean completed = cursor.getInt(cursor.getColumnIndexOrThrow("completed")) > 0;
                     ExerciseSet set = new ExerciseSet(setId, repetitions, weight);
-
-                    // Add set to workout exercise
                     workoutExercise.addSet(set);
                 }
 
@@ -191,7 +187,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         workouts.addAll(workoutMap.values());
-
         return workouts;
     }
 

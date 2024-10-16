@@ -30,6 +30,7 @@ public class SimpleWorkoutAdapter extends ArrayAdapter<Workout> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         Workout workout = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.workout_row, parent, false);
@@ -46,6 +47,7 @@ public class SimpleWorkoutAdapter extends ArrayAdapter<Workout> {
 
         exerciseView = convertView.findViewById(R.id.workout_row_exercises);
         // Add exercises to this view
+        exerciseView.removeAllViews();
         for (WorkoutExercise workoutExercise : workout.getWorkoutExerciseList()) {
             // Create view and add it to list
             exerciseView.addView(new WorkoutExerciseRow(getContext(), workoutExercise));
