@@ -18,6 +18,8 @@ import com.example.zenith.models.Workout;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import androidx.appcompat.widget.Toolbar;
+
 
 public class WorkoutsFragment extends Fragment {
 
@@ -32,7 +34,9 @@ public class WorkoutsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.workouts_fragment, container, false);
+        Toolbar toolbar = fragmentView.findViewById(R.id.toolbar);
 
+        toolbar.setTitle("Workouts");
         databaseHelper = new DatabaseHelper(getContext());
 
         workoutHistoryList = fragmentView.findViewById(R.id.workout_history_list);

@@ -29,6 +29,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    sourceSets{
+        getByName("main"){
+            res.srcDirs(
+                "src/main/res/layouts/exercises",
+                "src/main/res/layouts/general",
+                "src/main/res/layouts/home",
+                "src/main/res/layouts/workouts",
+                "src/main/res/layouts",
+                "src/main/res",
+            )
+        }
+    }
 }
 
 dependencies {
