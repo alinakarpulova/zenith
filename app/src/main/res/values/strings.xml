@@ -41,4 +41,6 @@
     <string name="workout_name_placeholder">Workout Name PlaceHolder</string>
     <string name="start_time_placeholder">Start Time Placeholder</string>
     <string name="end_time_placeholder">End Time Placeholder</string>
+    <string name="workout_name_sample">Workout Name Sample</string>
+    <string name="action_perform_again">Perform Again</string>
 </resources>

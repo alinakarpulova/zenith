@@ -89,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exercise;
     }
 
+
     public List<Exercise> getExerciseList() {
         List<Exercise> exercises = new ArrayList<>();
 
@@ -113,6 +114,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exercises;
+    }
+
+    public List<WorkoutExercise> getWorkoutExercises(int workoutId) {
+        List<WorkoutExercise> workoutExercises = new ArrayList<>();
+        String query = "SELECT * FROM workout_exercises where workoutId = ?";
+        SQLiteDatabase db = getReadableDatabase();
+        String[] selectionArgs = new String[]{String.valueOf(workoutId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.ID));
+                int exerciseId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.WORKOUT_EXERCISE_EXERCISE));
+                Exercise exercise = getExercise(exerciseId);
+                workoutExercises.add(new WorkoutExercise(id, exercise));
+            } while (cursor.moveToNext());
+        }
+    }
+
+    public Workout getWorkout(int workoutId) {
+        String query = "SELECT * FROM workouts WHERE ID=?";
+        SQLiteDatabase db = getReadableDatabase();
+        String[] selectionArgs = new String[]{String.valueOf(workoutId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        Workout workout = null;
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String workoutName = cursor.getString(1);
+            LocalDateTime startTime = LocalDateTime.parse(cursor.getString(2));
+            LocalDateTime endTime = LocalDateTime.parse(cursor.getString(3));
+            workout = new Workout(id, workoutName, startTime, endTime);
+
+            // Get workouts exercises
+        }
+        return workout;
     }
 
     public List<Workout> getWorkoutList() {
@@ -190,6 +227,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
+    public List<ExerciseSet> getExerciseSets(int workoutExerciseId) {
+        List<ExerciseSet> exerciseSets = new ArrayList<>();
+        String query = "SELECT * FROM exercise_sets WHERE ID=?";
+        SQLiteDatabase db = getReadableDatabase();
+        String[] selectionArgs = new String[]{String.valueOf(workoutExerciseId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.ID));
+                int reps = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.WORKOUT_EXERCISE_SET_REPS));
+                float weight = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseDefs.WORKOUT_EXERCISE_SET_WEIGHT));
+                exerciseSets.add(new ExerciseSet(id, reps, weight));
+            } while (cursor.moveToNext());
+        }
+        return exerciseSets;
+    }
 
     public void saveWorkout(Workout workout) {
         SQLiteDatabase db = getWritableDatabase();

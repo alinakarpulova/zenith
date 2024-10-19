@@ -15,6 +15,7 @@ public class ExerciseSet {
         this.id = id;
         this.repetitions = repetitions;
         this.weight = weight;
+        completed = false;
     }
 
     public void setRepetitions(int repetitions) {
