@@ -11,23 +11,23 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
         android:elevation="12dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_history"
-            app:iconGravity="textStart"
-            app:iconSize="24dp" />
+            android:fontFamily="@font/inter_medium"
+            android:textSize="22sp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/new_workout"/>
 
         <Space
             android:layout_width="0dp"
@@ -36,13 +36,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workout_complete_btn"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="@string/action_finish"
-            app:cornerRadius="3dp" />
+            app:cornerRadius="6dp" />
     </LinearLayout>
 
     <ScrollView
