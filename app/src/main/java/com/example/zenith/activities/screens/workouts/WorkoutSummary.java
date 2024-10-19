@@ -1,5 +1,6 @@
 package com.example.zenith.activities.screens.workouts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +36,13 @@ public class WorkoutSummary extends AppCompatActivity {
 
         MaterialButton repeatButton = findViewById(R.id.workout_summary_repeat_btn);
         MaterialButton cancelButton = findViewById(R.id.workout_summary_cancel_btn);
+
+        repeatButton.setOnClickListener((view -> {
+            Intent intent = new Intent(this, WorkoutNew.class);
+            intent.putExtra(WorkoutSummary.WORKOUT_ID, workout.getId());
+            finish();
+            startActivity(intent);
+        }));
 
         cancelButton.setOnClickListener((view -> {
             finish();

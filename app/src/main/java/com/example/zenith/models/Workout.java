@@ -38,6 +38,11 @@ public class Workout {
         this.name = name;
     }
 
+    public void restart(){
+        this.startTime = LocalDateTime.now();
+        this.endTime = null;
+    }
+
     public void setWorkoutExerciseList(ArrayList<WorkoutExercise> workoutExercises){
         workoutExerciseList = workoutExercises;
     }

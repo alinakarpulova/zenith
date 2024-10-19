@@ -24,7 +24,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class WorkoutNew extends AppCompatActivity {
-    Workout workout = new Workout("New Workout");
+    public static String WORKOUT_ID = "WORKOUT_ID";
+
+    Workout workout;
     MaterialButton addExerciseButton;
     MaterialButton cancelWorkoutButton;
     MaterialButton finishWorkoutButton;
@@ -37,7 +39,16 @@ public class WorkoutNew extends AppCompatActivity {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.workout_new);
+
+        Bundle instance = getIntent().getExtras();
         DatabaseHelper dbHelper = new DatabaseHelper(this);
+        if (instance != null) {
+            int workoutId = instance.getInt(WORKOUT_ID);
+            workout = dbHelper.getWorkout(workoutId);
+            workout.restart();
+        }else{
+            workout = new Workout("New Workout");
+        }
         exercises = dbHelper.getExerciseList();
 
         cancelWorkoutButton = findViewById(R.id.cancel_workout_btn);
@@ -45,14 +56,14 @@ public class WorkoutNew extends AppCompatActivity {
         exerciseList = findViewById(R.id.workout_exercise_list);
         finishWorkoutButton = findViewById(R.id.workout_complete_btn);
         workoutNameText = findViewById(R.id.workout_name_txt);
+        updateExerciseListView();
 
         setupListeners(dbHelper);
-
-
     }
 
     private void setupListeners(DatabaseHelper dbHelper) {
         DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
+        workoutNameText.setText(workout.getName());
 
         cancelWorkoutButton.setOnClickListener((view) -> {
             cancelWorkout();
