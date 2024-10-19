@@ -28,6 +28,10 @@ public class WorkoutExercise {
         return exerciseSets.get(index);
     }
 
+    public void setExerciseSets(List<ExerciseSet> exerciseSets) {
+        this.exerciseSets.addAll(exerciseSets);
+    }
+
     public void addSet(ExerciseSet exerciseSet) {
         this.exerciseSets.add(exerciseSet);
     }

@@ -3,6 +3,7 @@ package com.example.zenith.models;
 import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Workout {
@@ -31,6 +32,10 @@ public class Workout {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setWorkoutExerciseList(ArrayList<WorkoutExercise> workoutExercises){
+        workoutExerciseList = workoutExercises;
     }
 
     public void addWorkoutExercise(WorkoutExercise workoutExercise) {

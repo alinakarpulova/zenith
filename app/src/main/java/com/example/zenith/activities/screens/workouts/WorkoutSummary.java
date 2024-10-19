@@ -20,6 +20,8 @@ public class WorkoutSummary extends AppCompatActivity {
 
         setContentView(R.layout.workout_summary);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        workout = databaseHelper.getWorkoutById(workoutId);
+        workout = databaseHelper.getWorkout(workoutId);
+
+
     }
 }

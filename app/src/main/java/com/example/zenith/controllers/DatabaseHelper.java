@@ -128,9 +128,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.ID));
                 int exerciseId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseDefs.WORKOUT_EXERCISE_EXERCISE));
                 Exercise exercise = getExercise(exerciseId);
-                workoutExercises.add(new WorkoutExercise(id, exercise));
+                WorkoutExercise workoutExercise = new WorkoutExercise(id, exercise);
+                workoutExercise.setExerciseSets(getExerciseSets(id));
+                workoutExercises.add(workoutExercise);
             } while (cursor.moveToNext());
         }
+        return workoutExercises;
     }
 
     public Workout getWorkout(int workoutId) {
@@ -148,6 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             workout = new Workout(id, workoutName, startTime, endTime);
 
             // Get workouts exercises
+            workout.setWorkoutExerciseList(new ArrayList<>(getWorkoutExercises(id)));
         }
         return workout;
     }
