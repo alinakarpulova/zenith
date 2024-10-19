@@ -118,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<WorkoutExercise> getWorkoutExercises(int workoutId) {
         List<WorkoutExercise> workoutExercises = new ArrayList<>();
-        String query = "SELECT * FROM workout_exercises where workoutId = ?";
+        String query = "SELECT * FROM workout_exercises where workout_id = ?";
         SQLiteDatabase db = getReadableDatabase();
         String[] selectionArgs = new String[]{String.valueOf(workoutId)};
 
@@ -196,7 +196,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     // Extract exercise data
                     int exerciseId = cursor.getInt(cursor.getColumnIndexOrThrow("exerciseId"));
                     String exerciseName = cursor.getString(cursor.getColumnIndexOrThrow("exerciseName"));
-                    System.out.println(exerciseName);
                     // Convert string values to enums
                     String exerciseCategoryStr = cursor.getString(cursor.getColumnIndexOrThrow("exerciseCategory"));
                     ExerciseCategory exerciseCategory = ExerciseCategory.fromString(exerciseCategoryStr);
@@ -233,7 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<ExerciseSet> getExerciseSets(int workoutExerciseId) {
         List<ExerciseSet> exerciseSets = new ArrayList<>();
-        String query = "SELECT * FROM exercise_sets WHERE ID=?";
+        String query = "SELECT * FROM workout_exercise_sets WHERE workout_exercise_id=?";
         SQLiteDatabase db = getReadableDatabase();
         String[] selectionArgs = new String[]{String.valueOf(workoutExerciseId)};
 

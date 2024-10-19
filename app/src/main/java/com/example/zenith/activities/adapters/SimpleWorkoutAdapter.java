@@ -1,6 +1,7 @@
 package com.example.zenith.activities.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.zenith.R;
 import com.example.zenith.activities.screens.workouts.WorkoutExerciseRow;
+import com.example.zenith.activities.screens.workouts.WorkoutSummary;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
 
@@ -28,14 +30,16 @@ public class SimpleWorkoutAdapter extends ArrayAdapter<Workout> {
         super(context, 0, workouts);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         Workout workout = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.workout_row, parent, false);
         }
         TextView name = convertView.findViewById(R.id.workout_name);
+
 
         NumberFormat formatter = new DecimalFormat("00");
         TextView durationTxt = convertView.findViewById(R.id.workout_duration);
@@ -52,8 +56,15 @@ public class SimpleWorkoutAdapter extends ArrayAdapter<Workout> {
             // Create view and add it to list
             exerciseView.addView(new WorkoutExerciseRow(getContext(), workoutExercise));
         }
-
         name.setText(workout.getName());
+
+        convertView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), WorkoutSummary.class);
+            intent.putExtra(WorkoutSummary.WORKOUT_ID, workout.getId());
+            getContext().startActivity(intent);
+        });
+
+
         return convertView;
     }
 }

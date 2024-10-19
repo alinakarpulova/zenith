@@ -26,6 +26,10 @@ public class Workout {
         this.startTime = LocalDateTime.now();
     }
 
+    public int getId(){
+        return this.id;
+    }
+
     public String getName() {
         return name;
     }

@@ -24,6 +24,7 @@
         <activity android:name=".activities.screens.exercises.ExerciseNew" />
         <activity android:name=".activities.screens.workouts.WorkoutNew" />
         <activity android:name=".activities.screens.exercises.ExerciseDetails"/>
+        <activity android:name=".activities.screens.workouts.WorkoutSummary"/>
     </application>
 
 

@@ -12,7 +12,6 @@ import com.example.zenith.models.WorkoutExercise;
 
 @SuppressLint("ViewConstructor")
 public class WorkoutExerciseRow extends LinearLayout {
-    private View view;
     public WorkoutExerciseRow(Context context, WorkoutExercise workoutExercise) {
 
         super(context);
@@ -20,13 +19,11 @@ public class WorkoutExerciseRow extends LinearLayout {
     }
 
     private void init(Context context, WorkoutExercise workoutExercise) {
-        view = LayoutInflater.from(context).inflate(R.layout.workout_row_exercise, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.workout_row_exercise, this, true);
         TextView name = view.findViewById(R.id.workout_row_exercise_name);
         TextView sets = view.findViewById(R.id.workout_row_exercise_sets);
 
         name.setText(workoutExercise.getExercise().getName());
-        System.out.println(workoutExercise.getExerciseSets());
-        System.out.println(workoutExercise.getExerciseSets().get(1).getRepetitions());
         String setsText = workoutExercise.getExerciseSets().size() + "x" + workoutExercise.getExerciseSets().get(0).getRepetitions();
         sets.setText(setsText);
     }
