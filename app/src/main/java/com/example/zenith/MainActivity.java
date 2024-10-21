@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.zenith.activities.screens.HomeFragment;
 import com.example.zenith.activities.screens.exercises.ExercisesFragment;
+import com.example.zenith.activities.screens.statistics.StatisticsFragment;
 import com.example.zenith.activities.screens.workouts.WorkoutsFragment;
 import com.example.zenith.controllers.DatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 if (id == R.id.nav_item_exercises) {
                     selectedFragment = new ExercisesFragment();
                 }
+                if (id == R.id.nav_item_stats) {
+                    selectedFragment = new StatisticsFragment();
+                }
                 getSupportFragmentManager().beginTransaction().replace(R.id.main, selectedFragment).commit();
                 return true;
             }
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right,0);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
     }

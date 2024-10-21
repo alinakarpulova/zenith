@@ -37,6 +37,7 @@ android {
                 "src/main/res/layouts/general",
                 "src/main/res/layouts/home",
                 "src/main/res/layouts/workouts",
+                "src/main/res/layouts/statistics",
                 "src/main/res/layouts",
                 "src/main/res",
             )
