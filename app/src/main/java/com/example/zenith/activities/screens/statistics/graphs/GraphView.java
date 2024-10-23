@@ -17,7 +17,7 @@ public class GraphView extends View {
     private String title;
     private final Vec2 dimensions = new Vec2();
     private final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-    private final Vec2 chartBounds = new Vec2(dpToPx(90), dpToPx(90));
+    private final Vec2 chartBounds = new Vec2(dpToPx(30), dpToPx(30));
     private String xLabel;
     private String yLabel;
 
@@ -25,6 +25,8 @@ public class GraphView extends View {
     private Paint axisPaint;
     private Paint dataPaint;
     private TextPaint axisTextPaint;
+
+    private Vec2[] points = new Vec2[]{new Vec2(1, 1), new Vec2(1.5f, 3.5f), new Vec2(2.5f, 3), new Vec2(3, 4), new Vec2(5, 6)};
 
     private Grid grid;
 
@@ -53,7 +55,7 @@ public class GraphView extends View {
 
         gridPaint = new Paint();
         gridPaint.setColor(MaterialColors.getColor(getRootView(), com.google.android.material.R.attr.colorOnSurface));
-        gridPaint.setStrokeWidth(2);
+        gridPaint.setStrokeWidth(1);
 
         axisPaint = new Paint();
         axisPaint.setColor(MaterialColors.getColor(getRootView(), com.google.android.material.R.attr.colorOnSurface));
@@ -71,9 +73,10 @@ public class GraphView extends View {
         super.onDraw(canvas);
 
         Vec2 screenDimensions = new Vec2(getWidth(), getHeight());
-        grid = Grid.fromNumCells(new Vec2(10, 20), screenDimensions, chartBounds);
+        grid = Grid.fromNumCells(new Vec2(10, 10), screenDimensions, chartBounds);
         drawGrid(canvas, grid);
         drawAxisWithLabels(canvas, grid);
+        drawPointsWithLines(canvas, grid);
     }
 
 
@@ -100,13 +103,34 @@ public class GraphView extends View {
 
         // Draw Vertical Labels
         for (int i = 1; i < grid.getNumCells().y; i += 1) {
-            canvas.drawText(String.valueOf(i ), 0, (chartSize.y- (i * grid.getCellSize().y)), axisTextPaint);
+            canvas.drawText(String.valueOf(i), 0, (chartSize.y - (i * grid.getCellSize().y)), axisTextPaint);
         }
 
         // Draw Horizontal Labels
         for (int i = 1; i < grid.getNumCells().x; i += 1) {
             canvas.drawText(String.valueOf(i), i * grid.getCellSize().x + chartBounds.x, grid.getScreenDimensions().y, axisTextPaint);
         }
+    }
+
+    private void drawPointsWithLines(Canvas canvas, Grid grid) {
+        Vec2 prevPoint = null;
+        for (Vec2 point : points) {
+            Vec2 currentPoint = pointToGridCoord(point, grid);
+            if (prevPoint != null) {
+                // Draw line from previous point to current point
+                canvas.drawLine(prevPoint.x, prevPoint.y, currentPoint.x, currentPoint.y, dataPaint);
+            }
+            canvas.drawCircle(currentPoint.x, currentPoint.y, 12, dataPaint);
+            prevPoint = currentPoint;
+        }
+    }
+
+    private Vec2 pointToGridCoord(Vec2 point, Grid grid) {
+        // Translate point to grid sized coords
+        Vec2 pointCoordsCellSize = Vec2.multiply(point, grid.getCellSize());
+        // Get grid offsets with width and height;
+        Vec2 gridSize = Vec2.subtract(grid.getScreenDimensions(), chartBounds);
+        return new Vec2(chartBounds.x + pointCoordsCellSize.x, gridSize.y - pointCoordsCellSize.y);
     }
 
     private int dpToPx(int dp) {
