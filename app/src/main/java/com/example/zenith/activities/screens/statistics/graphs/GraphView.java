@@ -13,21 +13,22 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.color.MaterialColors;
 
+import java.util.Arrays;
+
 public class GraphView extends View {
-    private String title;
-    private final Vec2 dimensions = new Vec2();
     private final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
     private final Vec2 chartBounds = new Vec2(dpToPx(30), dpToPx(30));
-    private String xLabel;
-    private String yLabel;
+    private String[] xLabels;
+    private String[] yLabels;
 
     private Paint gridPaint;
     private Paint axisPaint;
     private Paint dataPaint;
     private TextPaint axisTextPaint;
 
-    private Vec2[] points = new Vec2[]{new Vec2(1, 1), new Vec2(1.5f, 3.5f), new Vec2(2.5f, 3), new Vec2(3, 4), new Vec2(5, 6)};
 
+    private Vec2 screenDimensions;
+    private Vec2[] points;
     private Grid grid;
 
     public GraphView(Context context) {
@@ -45,6 +46,28 @@ public class GraphView extends View {
         initBrushes();
     }
 
+    public void setData(Vec2[] dataPoints) {
+        this.points = dataPoints;
+        double maxHeight = Arrays.stream(points)
+                .mapToDouble(point -> point.y)
+                .max()
+                .orElse(0);
+
+        double maxLength = Arrays.stream(points)
+                .mapToDouble(point -> point.x)
+                .max().orElse(0);
+        getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            screenDimensions = new Vec2(getWidth(), getHeight());
+            grid = Grid.fromNumCells(new Vec2((float)maxLength + 1, (float) maxHeight + 1), screenDimensions, chartBounds);
+            invalidate();
+        });
+    }
+
+    public void setLabels(String[] xLabels, String[] yLabels) {
+        this.xLabels = xLabels;
+        this.yLabels = yLabels;
+        invalidate();
+    }
 
     private void initBrushes() {
 
@@ -71,12 +94,11 @@ public class GraphView extends View {
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
-
-        Vec2 screenDimensions = new Vec2(getWidth(), getHeight());
-        grid = Grid.fromNumCells(new Vec2(10, 10), screenDimensions, chartBounds);
-        drawGrid(canvas, grid);
-        drawAxisWithLabels(canvas, grid);
-        drawPointsWithLines(canvas, grid);
+        if (grid != null) {
+            drawGrid(canvas, grid);
+            drawAxisWithLabels(canvas, grid);
+            drawPointsWithLines(canvas, grid);
+        }
     }
 
 
@@ -115,6 +137,7 @@ public class GraphView extends View {
     private void drawPointsWithLines(Canvas canvas, Grid grid) {
         Vec2 prevPoint = null;
         for (Vec2 point : points) {
+
             Vec2 currentPoint = pointToGridCoord(point, grid);
             if (prevPoint != null) {
                 // Draw line from previous point to current point
@@ -127,7 +150,10 @@ public class GraphView extends View {
 
     private Vec2 pointToGridCoord(Vec2 point, Grid grid) {
         // Translate point to grid sized coords
+        System.out.println(point);
+        System.out.println(grid.getCellSize());
         Vec2 pointCoordsCellSize = Vec2.multiply(point, grid.getCellSize());
+        System.out.println(pointCoordsCellSize);
         // Get grid offsets with width and height;
         Vec2 gridSize = Vec2.subtract(grid.getScreenDimensions(), chartBounds);
         return new Vec2(chartBounds.x + pointCoordsCellSize.x, gridSize.y - pointCoordsCellSize.y);
