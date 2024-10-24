@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import com.example.zenith.R;
 import com.example.zenith.activities.screens.statistics.graphs.GraphView;
 import com.example.zenith.activities.screens.statistics.graphs.Vec2;
+import com.example.zenith.models.Exercise;
 
 public class StatisticsFragment extends Fragment {
+    private Exercise exercise;
     public StatisticsFragment() {
     }
 
@@ -30,5 +32,7 @@ public class StatisticsFragment extends Fragment {
         GraphView graphView = view.findViewById(R.id.graphView);
         Vec2[] points = new Vec2[]{new Vec2(11, 15), new Vec2(6, 7), new Vec2(10, 11)};
         graphView.setData(points);
+
+        //
     }
 }

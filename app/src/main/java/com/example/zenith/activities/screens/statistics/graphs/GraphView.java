@@ -31,6 +31,9 @@ public class GraphView extends View {
     private Vec2[] points;
     private Grid grid;
 
+    private boolean gridEnabled = true;
+    private boolean labelsEnabled = true;
+
     public GraphView(Context context) {
         super(context);
         initBrushes();
@@ -58,9 +61,25 @@ public class GraphView extends View {
                 .max().orElse(0);
         getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             screenDimensions = new Vec2(getWidth(), getHeight());
-            grid = Grid.fromNumCells(new Vec2((float)maxLength + 1, (float) maxHeight + 1), screenDimensions, chartBounds);
+            grid = Grid.fromNumCells(new Vec2((float) maxLength + 1, (float) maxHeight + 1), screenDimensions, chartBounds);
             invalidate();
         });
+    }
+
+    public void toggleLabels(){
+        labelsEnabled = false;
+    }
+
+    public boolean isLabelsEnabled(){
+        return labelsEnabled;
+    }
+
+    public void toggleGrid() {
+        this.gridEnabled = false;
+    }
+
+    public boolean isGridEnabled() {
+        return this.gridEnabled;
     }
 
     public void setLabels(String[] xLabels, String[] yLabels) {
@@ -101,8 +120,12 @@ public class GraphView extends View {
         }
     }
 
-
     private void drawGrid(Canvas canvas, Grid grid) {
+        if (!isGridEnabled()) {
+            // skip grid drawing
+            return;
+        }
+
         Vec2 cells = grid.getNumCells();
         Vec2 cellSize = grid.getCellSize();
         Vec2 gridSize = Vec2.subtract(grid.getScreenDimensions(), chartBounds);
@@ -123,6 +146,11 @@ public class GraphView extends View {
         // Draw Y axis
         canvas.drawLine(chartBounds.x, chartBounds.y, chartBounds.x, chartSize.y, axisPaint);
 
+
+        if (!isLabelsEnabled()){
+            // Skip label drawing
+            return;
+        }
         // Draw Vertical Labels
         for (int i = 1; i < grid.getNumCells().y; i += 1) {
             canvas.drawText(String.valueOf(i), 0, (chartSize.y - (i * grid.getCellSize().y)), axisTextPaint);

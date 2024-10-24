@@ -45,4 +45,6 @@
     <string name="action_perform_again">Perform Again</string>
     <string name="new_workout">New Workout</string>
     <string name="nav_item_statistics">Statistics</string>
+    <string name="action_select_exercise">Select Exercise</string>
+    <string name="workout_statistics">Workout Statistics</string>
 </resources>
