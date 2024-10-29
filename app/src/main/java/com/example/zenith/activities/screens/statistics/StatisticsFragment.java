@@ -43,9 +43,6 @@ public class StatisticsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(dbHelper.getExerciseList(), getContext());
-
-        // Create exercise Dropdown
 
 
         GraphView graphView = view.findViewById(R.id.graphView);

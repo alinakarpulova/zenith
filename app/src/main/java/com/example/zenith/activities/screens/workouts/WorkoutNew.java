@@ -46,7 +46,7 @@ public class WorkoutNew extends AppCompatActivity {
             int workoutId = instance.getInt(WORKOUT_ID);
             workout = dbHelper.getWorkout(workoutId);
             workout.restart();
-        }else{
+        } else {
             workout = new Workout("New Workout");
         }
         exercises = dbHelper.getExerciseList();
@@ -62,7 +62,7 @@ public class WorkoutNew extends AppCompatActivity {
     }
 
     private void setupListeners(DatabaseHelper dbHelper) {
-        DialogWithSearchMulti exercisesDialog = new DialogWithSearchMulti(exercises, this);
+        DialogWithSearchMulti<Exercise> exercisesDialog = new DialogWithSearchMulti<>(exercises, this);
         workoutNameText.setText(workout.getName());
 
         cancelWorkoutButton.setOnClickListener((view) -> {
