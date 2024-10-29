@@ -11,19 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
-import com.example.zenith.models.Exercise;
+import com.example.zenith.components.SelectableItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialogRowAdapter.ViewHolder> {
-    private Exercise[] exercises;
+public class DialogRowAdapterMulti<T extends SelectableItem> extends RecyclerView.Adapter<DialogRowAdapterMulti.ViewHolder> {
+    private List<T> items;
     private Filter filter;
-    private List<Exercise> filteredExercises;
+    private List<T> filteredItems;
     private HashMap<Integer, Boolean> checkedStates; // Track checked state for each item
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
@@ -33,9 +32,9 @@ public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialo
         public ViewHolder(View view) {
             super(view);
 
-            name = view.findViewById(R.id.checked_exercise_name);
-            category = view.findViewById(R.id.checked_exercise_category);
-            checkBox = view.findViewById(R.id.checked_exercise_checkbox);
+            name = view.findViewById(R.id.dialog_item_name);
+            category = view.findViewById(R.id.dialog_item_subheading);
+            checkBox = view.findViewById(R.id.dialog_item_checkbox);
         }
 
         public TextView getName() {
@@ -51,9 +50,9 @@ public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialo
         }
     }
 
-    public ExerciseDialogRowAdapter(Exercise[] exercises) {
-        this.exercises = exercises;
-        this.filteredExercises = new ArrayList<>(Arrays.asList(exercises));
+    public DialogRowAdapterMulti(List<T> items) {
+        this.items = items;
+        this.filteredItems = new ArrayList<>(items);
         this.checkedStates = new HashMap<>();
     }
 
@@ -67,8 +66,8 @@ public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getName().setText(filteredExercises.get(position).getName());
-        viewHolder.getCategory().setText(filteredExercises.get(position).getExerciseCategory().toString());
+        viewHolder.getName().setText(filteredItems.get(position).getHeading());
+        viewHolder.getCategory().setText(filteredItems.get(position).getSubheading());
 
         // Set the checked state based on the tracked value
         viewHolder.getCheckBox().setChecked(checkedStates.getOrDefault(position, false));
@@ -89,57 +88,57 @@ public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialo
 
     @Override
     public long getItemId(int i) {
-        return filteredExercises.get(i).getId();
+        return filteredItems.get(i).getId();
     }
 
     @Override
     public int getItemCount() {
-        return filteredExercises.size();
+        return filteredItems.size();
     }
 
     public Filter getFilter() {
         if (filter == null) {
-            filter = new ExerciseDialogRowAdapter.ExerciseFilter();
+            filter = new ItemFilter();
         }
         return filter;
     }
 
 
-    public void setItemChecked(Exercise itemChecked, Boolean checked) {
-        int index = filteredExercises.indexOf(itemChecked);
+    public void setItemChecked(T itemChecked, Boolean checked) {
+        int index = filteredItems.indexOf(itemChecked);
         if (index != -1) {
             checkedStates.put(index, checked);
             notifyItemChanged(index); // Notify the adapter of the change
         }
     }
 
-    public List<Exercise> getCheckedExercises() {
-        List<Exercise> checkedExercises = new ArrayList<>();
-        for (int i = 0; i < filteredExercises.size(); i++) {
+    public List<T> getCheckedItems() {
+        List<T> checkedItems = new ArrayList<>();
+        for (int i = 0; i < filteredItems.size(); i++) {
             if (checkedStates.getOrDefault(i, false)) {
-                checkedExercises.add(filteredExercises.get(i));
+                checkedItems.add(filteredItems.get(i));
             }
         }
-        return checkedExercises;
+        return checkedItems;
     }
 
-    private class ExerciseFilter extends Filter {
+    private class ItemFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String filterPattern = constraint != null ? constraint.toString().toLowerCase().trim() : "";
 
             FilterResults results = new FilterResults();
-            List<Exercise> filteredList = new ArrayList<>();
+            List<T> filteredList = new ArrayList<>();
 
             if (filterPattern.isEmpty()) {
-                // If no filter is applied, return the original exercises
-                filteredList.addAll(List.of(exercises));
+                // If no filter is applied, return the original items
+                filteredList.addAll(items);
             } else {
                 // Filter by name and category
-                for (Exercise exercise : exercises) {
-                    if (exercise.getName().toLowerCase().contains(filterPattern) ||
-                            exercise.getExerciseCategory().toString().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(exercise);
+                for (T item : items) {
+                    if (item.getHeading().toLowerCase().contains(filterPattern) ||
+                            item.getSubheading().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
                     }
                 }
             }
@@ -151,8 +150,8 @@ public class ExerciseDialogRowAdapter extends RecyclerView.Adapter<ExerciseDialo
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredExercises.clear();
-            filteredExercises.addAll((List<Exercise>) results.values);
+            filteredItems.clear();
+            filteredItems.addAll((Collection<? extends T>) results.values);
             notifyDataSetChanged(); // Notify adapter about data change
         }
     }

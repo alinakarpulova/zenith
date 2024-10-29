@@ -2,7 +2,9 @@ package com.example.zenith.models;
 
 import androidx.annotation.Nullable;
 
-public class Exercise {
+import com.example.zenith.components.SelectableItem;
+
+public class Exercise implements SelectableItem {
     private int id;
     private String name;
     private String image;
@@ -19,7 +21,7 @@ public class Exercise {
         this.deletable = deletable != null ? deletable : false;
     }
 
-    public Exercise(int id, String name,ExerciseCategory category, ExerciseBodyPart bodyPart) {
+    public Exercise(int id, String name, ExerciseCategory category, ExerciseBodyPart bodyPart) {
         this.id = id;
         this.name = name;
         this.exerciseCategory = category;
@@ -41,6 +43,16 @@ public class Exercise {
 
     public ExerciseBodyPart getExerciseBodyPart() {
         return exerciseBodyPart;
+    }
+
+    @Override
+    public String getHeading() {
+        return this.name;
+    }
+
+    @Override
+    public String getSubheading() {
+        return this.getExerciseCategory().toString();
     }
 
     public int getId() {

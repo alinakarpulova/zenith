@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
-import com.example.zenith.activities.adapters.ExerciseDialogRowAdapter;
+import com.example.zenith.activities.adapters.DialogRowAdapterMulti;
 import com.example.zenith.models.Exercise;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class DialogWithSearchMulti {
         dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.shape_round));
         dialog.setCancelable(true);
         RecyclerView recyclerView = dialog.findViewById(R.id.dialog_list_view);
-        ExerciseDialogRowAdapter adapter = new ExerciseDialogRowAdapter(itemList.toArray(new Exercise[0]));
+        DialogRowAdapterMulti adapter = new DialogRowAdapterMulti(itemList);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -68,7 +68,7 @@ public class DialogWithSearchMulti {
 
         dialogConfirm.setOnClickListener((view) -> {
             selectedItems.clear(); // Clear previous selections
-            selectedItems.addAll(adapter.getCheckedExercises());
+            selectedItems.addAll(adapter.getCheckedItems());
             dialog.dismiss();
         });
     }
