@@ -3,6 +3,8 @@ package com.example.zenith.components;
 import android.content.Context;
 import android.widget.Button;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.zenith.R;
 import com.example.zenith.activities.adapters.DialogRowAdapterMulti;
 import com.example.zenith.models.Exercise;
@@ -21,7 +23,11 @@ public class DialogWithSearchMulti<T extends SelectableItem> extends DialogWithS
     public void showDialog(List<T> checkedItems) {
         super.showDialog();
         // Handle checked items
-        DialogRowAdapterMulti<T> adapter = (DialogRowAdapterMulti<T>) recyclerView.getAdapter();
+        DialogRowAdapterMulti adapter = new DialogRowAdapterMulti<>(itemList);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
         if (adapter != null) {
             for (T item : checkedItems) {
                 adapter.setItemChecked(item, true);

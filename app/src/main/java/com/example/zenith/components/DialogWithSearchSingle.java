@@ -3,8 +3,12 @@ package com.example.zenith.components;
 import android.content.Context;
 import android.widget.Button;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.zenith.R;
 import com.example.zenith.activities.adapters.DialogRowAdapter;
+import com.example.zenith.activities.adapters.DialogRowAdapterMulti;
+import com.example.zenith.models.Exercise;
 
 import java.util.List;
 
@@ -18,13 +22,15 @@ public class DialogWithSearchSingle<T extends SelectableItem> extends DialogWith
     public void showDialog() {
         super.showDialog();
         // Handle checked items
-        DialogRowAdapter<T> adapter = (DialogRowAdapter<T>) recyclerView.getAdapter();
+        DialogRowAdapter adapter = new DialogRowAdapter<>(itemList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         Button dialogConfirm = dialog.findViewById(R.id.dialog_confirm_button);
         dialogConfirm.setActivated(false);
 
         dialogConfirm.setOnClickListener((view) -> {
-            selectedItem = adapter.getCheckedItem();
+            selectedItem = (T) adapter.getCheckedItem();
             dialog.dismiss();
         });
 

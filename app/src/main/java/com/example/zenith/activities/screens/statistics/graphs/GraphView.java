@@ -55,7 +55,6 @@ public class GraphView extends View {
                 .mapToDouble(point -> point.y)
                 .max()
                 .orElse(0);
-
         double maxLength = Arrays.stream(points)
                 .mapToDouble(point -> point.x)
                 .max().orElse(0);
@@ -64,6 +63,11 @@ public class GraphView extends View {
             grid = Grid.fromNumCells(new Vec2((float) maxLength + 1, (float) maxHeight + 1), screenDimensions, chartBounds);
             invalidate();
         });
+
+        if (screenDimensions != null){
+            grid = Grid.fromNumCells(new Vec2(10f, (float) maxHeight + 1), screenDimensions, chartBounds);
+            invalidate();
+        }
     }
 
     public void toggleLabels(){
@@ -134,9 +138,9 @@ public class GraphView extends View {
             canvas.drawLine(chartBounds.x + i * cellSize.x, chartBounds.y, chartBounds.x + i * cellSize.x, gridSize.y, gridPaint);
         }
         // Horizontal grid lines
-        for (int i = 0; i < cells.y; i++) {
-            canvas.drawLine(chartBounds.x, chartBounds.y + i * cellSize.y, gridSize.x, chartBounds.y + i * cellSize.y, gridPaint);
-        }
+//        for (int i = 0; i < cells.y; i++) {
+//            canvas.drawLine(chartBounds.x, chartBounds.y + i * cellSize.y, gridSize.x, chartBounds.y + i * cellSize.y, gridPaint);
+//        }
     }
 
     private void drawAxisWithLabels(Canvas canvas, Grid grid) {
@@ -151,9 +155,16 @@ public class GraphView extends View {
             // Skip label drawing
             return;
         }
+        System.out.println("Drawing Labels");
+        int labelMultiplier = 1;
+        if (grid.getNumCells().y > 10 && grid.getNumCells().y < 100){
+            labelMultiplier = 10;
+        }else if (grid.getNumCells().y > 100 && grid.getNumCells().y < 1000){
+            labelMultiplier = 100;
+        }
         // Draw Vertical Labels
-        for (int i = 1; i < grid.getNumCells().y; i += 1) {
-            canvas.drawText(String.valueOf(i), 0, (chartSize.y - (i * grid.getCellSize().y)), axisTextPaint);
+        for (int i = 1; i < (grid.getNumCells().y / labelMultiplier); i += 1) {
+            canvas.drawText(String.valueOf(i * labelMultiplier), 0, (chartSize.y - (i * grid.getCellSize().y * labelMultiplier)), axisTextPaint);
         }
 
         // Draw Horizontal Labels
@@ -178,10 +189,7 @@ public class GraphView extends View {
 
     private Vec2 pointToGridCoord(Vec2 point, Grid grid) {
         // Translate point to grid sized coords
-        System.out.println(point);
-        System.out.println(grid.getCellSize());
         Vec2 pointCoordsCellSize = Vec2.multiply(point, grid.getCellSize());
-        System.out.println(pointCoordsCellSize);
         // Get grid offsets with width and height;
         Vec2 gridSize = Vec2.subtract(grid.getScreenDimensions(), chartBounds);
         return new Vec2(chartBounds.x + pointCoordsCellSize.x, gridSize.y - pointCoordsCellSize.y);

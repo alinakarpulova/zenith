@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
+import com.example.zenith.activities.adapters.DialogRowAdapter;
 import com.example.zenith.activities.adapters.DialogRowAdapterMulti;
 
 import java.util.List;
@@ -31,10 +32,10 @@ public class DialogWithSearch<T extends SelectableItem> {
     public void showDialog() {
         dialogSetup();
 
-        DialogRowAdapterMulti adapter = new DialogRowAdapterMulti<>(itemList);
-
+        DialogRowAdapter adapter = new DialogRowAdapter<>(itemList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
         searchView = dialog.findViewById(R.id.dialog_search);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

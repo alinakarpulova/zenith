@@ -19,7 +19,6 @@ public class Grid {
     public static Grid fromNumCells(Vec2 numCells, Vec2 screenDimensions, Vec2 bounds) {
 
         Vec2 cellSize = calcCellSize(numCells, screenDimensions, bounds);
-        System.out.println(cellSize);
         return new Grid(cellSize, numCells, screenDimensions);
     }
 

@@ -3,6 +3,7 @@ package com.example.zenith.activities.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -67,21 +68,20 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
         viewHolder.getName().setText(filteredItems.get(position).getHeading());
         viewHolder.getCategory().setText(filteredItems.get(position).getSubheading());
 
-        viewHolder.getRadioBtn().setChecked(position == checkedItem);
+        viewHolder.getRadioBtn().setChecked(checkedItem != null && position == checkedItem);
 
-//        viewHolder.getRadioBtn().setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            checkedItem = position;
-//        });
-
-        viewHolder.itemView.setOnClickListener(v -> {
-            boolean isChecked = checkedItem == position;
+        viewHolder.getRadioBtn().setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
-                checkedItem = null;
-                viewHolder.getRadioBtn().setChecked(false);
-
-            } else {
-                checkedItem = position;
-                viewHolder.getRadioBtn().setChecked(true);
+                // Uncheck the previously selected item
+                if (checkedItem != null && checkedItem != position) {
+                    int previousChecked = checkedItem;
+                    checkedItem = position;
+                    notifyItemChanged(previousChecked);
+                } else {
+                    checkedItem = position;
+                }
+            } else if (checkedItem != null && checkedItem == position) {
+                checkedItem = null; // Clear the selection if unchecked
             }
         });
     }
@@ -113,7 +113,10 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
     }
 
     public T getCheckedItem() {
-        return filteredItems.get(checkedItem);
+        if (checkedItem != null) {
+            return filteredItems.get(checkedItem);
+        }
+        return null;
     }
 
     private class ItemFilter extends android.widget.Filter {

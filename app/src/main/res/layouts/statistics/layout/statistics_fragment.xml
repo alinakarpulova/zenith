@@ -25,6 +25,14 @@
                 android:text="@string/action_select_exercise"
                 app:cornerRadius="4dp" />
 
+            <TextView
+                android:id="@+id/graphTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
+
             <com.example.zenith.activities.screens.statistics.graphs.GraphView
                 android:id="@+id/graphView"
                 android:layout_width="match_parent"
@@ -34,8 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/workout_statistics"
+                android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
-
 
         </LinearLayout>
     </ScrollView>

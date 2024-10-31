@@ -10,6 +10,8 @@ import com.example.zenith.models.Exercise;
 import com.example.zenith.models.ExerciseBodyPart;
 import com.example.zenith.models.ExerciseCategory;
 import com.example.zenith.models.ExerciseSet;
+import com.example.zenith.models.ExerciseStatistics;
+import com.example.zenith.models.ExerciseStatisticsData;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
 
@@ -294,6 +296,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DatabaseDefs.EXERCISE_BODYPART, exercise.getExerciseBodyPart().toString());
         contentValues.put(DatabaseDefs.EXERCISE_MODIFIABLE, exercise.isModifiable());
         db.insert(DatabaseDefs.EXERCISE_TABLE, null, contentValues);
+    }
+
+    public ExerciseStatistics getExerciseStats(int id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT workout_id, startTime, E.name, AVG(weight) AS avg_weight, MAX(weight) AS max_weight, MAX(repetitions) AS max_reps, SUM(repetitions) * SUM(weight) AS total_weight  FROM workout_exercises WE\n" +
+                "JOIN workout_exercise_sets  S ON S.workout_exercise_id = WE.id\n" +
+                "JOIN workouts W ON WE.workout_id = W.id\n" +
+                "JOIN exercises E ON WE.exercise_id = E.id\n" +
+                "WHERE E.id = ?\n" +
+                "GROUP BY workout_id, exercise_id\n" +
+                "ORDER BY W.startTime DESC\n" +
+                "LIMIT 10";
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        ExerciseStatistics data = null;
+
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseDefs.EXERCISE_NAME));
+                float avgWeight = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseDefs.AVG_WEIGHT));
+                float maxWeight = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseDefs.MAX_WEIGHT));
+                float maxReps = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseDefs.MAX_REPS));
+                float totalWeight = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseDefs.TOTAL_WEIGHT));
+
+                if (data == null) {
+                    data = new ExerciseStatistics(name);
+                }
+
+                ExerciseStatisticsData statsData = new ExerciseStatisticsData(avgWeight, maxWeight, maxReps, totalWeight);
+                data.addStats(statsData);
+            } while (cursor.moveToNext());
+        }
+
+        return data;
     }
 
 }

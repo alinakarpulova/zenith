@@ -25,4 +25,9 @@ public class DatabaseDefs {
     public static final String WORKOUT_EXERCISE_SET_REPS = "repetitions";
     public static final String WORKOUT_EXERCISE_SET_COMPLETED = "completed";
     public static final String WORKOUT_EXERCISE_SET_WORKOUT_EXERCISE = "workout_exercise_id";
+
+    public static final String AVG_WEIGHT = "avg_weight";
+    public static final String MAX_WEIGHT = "max_weight";
+    public static final String MAX_REPS = "max_reps";
+    public static final String TOTAL_WEIGHT = "total_weight";
 }
