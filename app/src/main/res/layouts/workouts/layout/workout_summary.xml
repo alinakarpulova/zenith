@@ -22,18 +22,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/workout_name_sample"
-            android:textSize="18sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Heading"
+            android:textSize="18sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/route_exercises" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/workout_summary_exercises"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workout_summary_repeat_btn"
@@ -42,15 +43,15 @@
             android:layout_marginTop="4dp"
             android:text="@string/action_perform_again"
             app:cornerRadius="8dp" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workout_summary_cancel_btn"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/design_default_color_error"
             android:text="@string/action_cancel"
-            />
+            android:textColor="@color/design_default_color_error"
+            app:cornerRadius="8dp"
+            app:rippleColor="?attr/colorErrorContainer" />
     </LinearLayout>
-
-
 </LinearLayout>
