@@ -14,6 +14,7 @@ import com.example.zenith.models.ExerciseStatistics;
 import com.example.zenith.models.ExerciseStatisticsData;
 import com.example.zenith.models.Workout;
 import com.example.zenith.models.WorkoutExercise;
+import com.example.zenith.models.WorkoutStatistic;
 
 import org.threeten.bp.LocalDateTime;
 
@@ -330,8 +331,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 data.addStats(statsData);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         return data;
+    }
+
+    public List<WorkoutStatistic> getWorkoutStatistics() {
+        List<WorkoutStatistic> workoutStatistics = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "WITH workout_days AS (\n" +
+                "  SELECT DISTINCT DATE(startTime) AS workout_date" +
+                "  FROM workouts" +
+                ")," +
+                "consecutive_days AS (" +
+                "  SELECT" +
+                "    workout_date," +
+                "    ROW_NUMBER() OVER (ORDER BY workout_date) - " +
+                "    JULIANDAY(workout_date) AS gap_group" +
+                "  FROM workout_days" +
+                ")," +
+                "max_consecutive AS (" +
+                "  SELECT " +
+                "    MAX(day_count) AS max_consecutive_days" +
+                "  FROM (" +
+                "    SELECT " +
+                "      COUNT(*) AS day_count" +
+                "    FROM consecutive_days" +
+                "    GROUP BY gap_group" +
+                "  )" +
+                ")," +
+                "most_performed AS (" +
+                "  SELECT " +
+                "    E.name AS most_performed_exercise" +
+                "  FROM workout_exercises WE" +
+                "  JOIN exercises E ON WE.exercise_id = E.id" +
+                "  GROUP BY exercise_id" +
+                "  ORDER BY COUNT(exercise_id) DESC" +
+                "  LIMIT 1" +
+                ") " +
+                "SELECT " +
+                "  (SELECT COUNT(*) FROM workouts) AS total_workouts, " +
+                " ROUND(AVG(julianday(endTime) - julianday(startTime)) * 24 * 60) AS average_workout_length, " +
+                "  COALESCE(max_consecutive.max_consecutive_days, 0) AS max_consecutive_days, " +
+                "  COALESCE(most_performed.most_performed_exercise, 'N/A') AS most_performed_exercise " +
+                "FROM workouts " +
+                "LEFT JOIN max_consecutive ON 1=1 " +
+                "LEFT JOIN most_performed ON 1=1 ;";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            workoutStatistics.add(new WorkoutStatistic<Integer>("Total Workouts", cursor.getInt(0)));
+            workoutStatistics.add(new WorkoutStatistic<Float>("Average Workout Duration", cursor.getFloat(1)));
+            workoutStatistics.add(new WorkoutStatistic<Integer>("Maximum Consecutive Workouts", cursor.getInt(2)));
+            workoutStatistics.add(new WorkoutStatistic<String>("Most Performed Exercise", cursor.getString(3)));
+        }
+
+        cursor.close();
+        return workoutStatistics;
     }
 
 }

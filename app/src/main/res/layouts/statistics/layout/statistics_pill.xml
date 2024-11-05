@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginVertical="12dp"
+    >
+    <ImageView
+        android:id="@+id/statistics_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_stats"
+        app:layout_constraintBottom_toBottomOf="@id/statistics_data_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorPrimary" />
+
+    <LinearLayout
+        android:id="@+id/statistics_data_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/statistics_icon"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/statistics_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Workouts"
+            android:textAppearance="@style/TextAppearance.AppCompat.Label" />
+
+        <TextView
+            android:id="@+id/statistics_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textAppearance="@style/TextAppearance.AppCompat.Heading">
+
+        </TextView>
+    </LinearLayout>
+</merge>

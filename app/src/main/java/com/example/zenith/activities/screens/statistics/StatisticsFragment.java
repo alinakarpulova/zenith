@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
-import com.example.zenith.activities.adapters.ExerciseRowAdapter;
 import com.example.zenith.activities.screens.statistics.graphs.GraphView;
 import com.example.zenith.activities.screens.statistics.graphs.Vec2;
 import com.example.zenith.components.DialogWithSearchSingle;
@@ -21,18 +21,18 @@ import com.example.zenith.controllers.DatabaseHelper;
 import com.example.zenith.models.Exercise;
 import com.example.zenith.models.ExerciseStatistics;
 import com.example.zenith.models.ExerciseStatisticsData;
+import com.example.zenith.models.WorkoutStatistic;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
-    private Exercise exercise;
     private MaterialButton selectExerciseBtn;
-    private RecyclerView recyclerView;
-    private ExerciseRowAdapter adapter;
     private DatabaseHelper dbHelper;
     private TextView graphTitle;
+    private Toolbar toolbar;
+    private LinearLayout linearLayout;
     GraphView graphView;
 
 
@@ -44,6 +44,8 @@ public class StatisticsFragment extends Fragment {
         View view = inflater.inflate(R.layout.statistics_fragment, container, false);
         selectExerciseBtn = view.findViewById(R.id.exercise_picker_btn);
         graphTitle = view.findViewById(R.id.graphTitle);
+        toolbar = view.findViewById(R.id.toolbar);
+        linearLayout = view.findViewById(R.id.stats_linear_layout);
         dbHelper = new DatabaseHelper(getContext());
         return view;
     }
@@ -52,6 +54,8 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar.setTitle("Statistics");
 
         DialogWithSearchSingle<Exercise> dialog = new DialogWithSearchSingle<>(dbHelper.getExerciseList(), getContext());
         dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -62,6 +66,12 @@ public class StatisticsFragment extends Fragment {
                 }
             }
         });
+
+        List<WorkoutStatistic> stats = dbHelper.getWorkoutStatistics();
+        for (WorkoutStatistic statistic : stats) {
+            StatisticsPill pill = new StatisticsPill(getContext(), statistic);
+            linearLayout.addView(pill);
+        }
 
         selectExerciseBtn.setOnClickListener((v) -> {
             dialog.showDialog();
@@ -76,6 +86,11 @@ public class StatisticsFragment extends Fragment {
 
     private void updateGraphStats(Exercise exercise) {
         ExerciseStatistics statistics = dbHelper.getExerciseStats(exercise.getId());
+        if (statistics == null) {
+            graphTitle.setText(R.string.no_data);
+            graphView.setData(new Vec2[]{});
+            return;
+        }
         graphTitle.setText(statistics.getExerciseName());
         List<Float> averageWeights = statistics.getStatistic(ExerciseStatisticsData::getMaxWeight);
         List<Vec2> points = new ArrayList<>();
