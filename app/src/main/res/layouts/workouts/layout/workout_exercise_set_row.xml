@@ -43,7 +43,7 @@
         android:paddingHorizontal="0dp"
         android:paddingVertical="4dp"
         android:src="@drawable/ic_check_1"
-        app:tint="?attr/colorPrimary" />
+        app:tint="@color/colorPrimary" />
 
     <ImageButton
         android:id="@+id/delete_set_btn"

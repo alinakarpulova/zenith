@@ -10,7 +10,9 @@ import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.example.zenith.R;
 import com.google.android.material.color.MaterialColors;
 
 import java.util.Arrays;
@@ -103,7 +105,7 @@ public class GraphView extends View {
         axisPaint.setStrokeWidth(8);
 
         dataPaint = new Paint();
-        dataPaint.setColor(MaterialColors.getColor(getRootView(), com.google.android.material.R.attr.colorPrimary));
+        dataPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         dataPaint.setStrokeWidth(8);
         dataPaint.setStyle(Paint.Style.FILL);
     }

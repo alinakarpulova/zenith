@@ -64,8 +64,10 @@
                 android:id="@+id/category_dialog_btn"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="@string/category_label"
+                android:textColor="@color/colorPrimary"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 
@@ -77,6 +79,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="32dp"
             android:orientation="horizontal"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -85,6 +88,7 @@
                 android:id="@+id/bodypart_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+
                 android:layout_weight="1"
                 android:text="@string/bodypart_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Heading" />
@@ -93,8 +97,10 @@
                 android:id="@+id/bodypart_dialog_btn"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:text="@string/bodypart_label"
+                android:textColor="@color/colorPrimary"
                 app:cornerRadius="8dp" />
 
         </LinearLayout>
@@ -105,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
+            android:backgroundTint="@color/colorOnPrimary"
             android:contentDescription="@string/action_submit"
             android:src="@drawable/ic_check_1"
             app:layout_constraintBottom_toBottomOf="parent"

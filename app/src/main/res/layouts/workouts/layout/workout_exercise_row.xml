@@ -54,6 +54,8 @@
             android:id="@+id/workout_exercise_add_set_btn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
+            android:textColor="@color/colorPrimary"
+            app:rippleColor="@color/colorOnPrimary"
             android:layout_height="wrap_content"
             android:text="@string/action_add_set" />
     </LinearLayout>

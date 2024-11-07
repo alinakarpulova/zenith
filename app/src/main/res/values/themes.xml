@@ -11,9 +11,17 @@
         <item name="labelFontFamily">@font/inter_light</item>
     </style>
 
+    <!-- themes.xml -->
+    <style name="CustomBottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/colorOnPrimary</item>
+    </style>
+
     <color name="iconTint">#222222</color>
 
-
+    <color name="colorPrimary">#10b981</color>
+    <color name="colorOnPrimary">#a7f3d0</color>
+    <color name="rippleColor">#55a7f3d0</color>
+    <color name="surfaceColor">#22a7f3d0</color>
     <color name="pillBackground">@color/cardview_shadow_end_color</color>
     <color name="shapeBackground">@color/cardview_light_background</color>
     <color name="textInputBackground">?attr/colorSurfaceContainer</color>

@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.zenith.R;
 import com.example.zenith.models.ExerciseSet;
 import com.google.android.material.color.MaterialColors;
@@ -62,14 +64,14 @@ public class WorkoutSetRow extends TableRow {
 
     public void updateView() {
         if (exerciseSet.isCompleted()) {
-            view.setBackgroundColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorPrimary));
-            setIndexText.setTextColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnPrimary));
-            completeBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnPrimary));
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            setIndexText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOnPrimary));
+            completeBtn.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorOnPrimary));
             deleteBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorErrorContainer));
         } else {
             view.setBackgroundColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorSurface));
             setIndexText.setTextColor(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnSurface));
-            completeBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorPrimary));
+            completeBtn.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             deleteBtn.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorError));
         }
     }
