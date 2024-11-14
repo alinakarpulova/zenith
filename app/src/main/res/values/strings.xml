@@ -48,4 +48,5 @@
     <string name="action_select_exercise">Select Exercise</string>
     <string name="workout_statistics">Workout Statistics</string>
     <string name="no_data">No Data</string>
+    <string name="action_delete_workout">Delete Workout</string>
 </resources>

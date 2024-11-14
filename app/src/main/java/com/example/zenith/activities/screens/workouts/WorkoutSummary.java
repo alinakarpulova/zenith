@@ -1,12 +1,15 @@
 package com.example.zenith.activities.screens.workouts;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.example.zenith.R;
 import com.example.zenith.controllers.DatabaseHelper;
@@ -36,6 +39,7 @@ public class WorkoutSummary extends AppCompatActivity {
 
         MaterialButton repeatButton = findViewById(R.id.workout_summary_repeat_btn);
         MaterialButton cancelButton = findViewById(R.id.workout_summary_cancel_btn);
+        MaterialButton deleteButton = findViewById(R.id.workout_summary_delete_btn);
 
         repeatButton.setOnClickListener((view -> {
             Intent intent = new Intent(this, WorkoutNew.class);
@@ -46,6 +50,24 @@ public class WorkoutSummary extends AppCompatActivity {
 
         cancelButton.setOnClickListener((view -> {
             finish();
+        }));
+
+        deleteButton.setOnClickListener((view -> {
+            AlertDialog alertDialog = new AlertDialog.Builder(WorkoutSummary.this)
+                    .setTitle("Delete Confirmation")
+                    .setMessage("Are you sure you want to delete this workout?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            databaseHelper.deleteWorkout(workoutId);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            // Change the button colors after the dialog is shown
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorError));
         }));
 
         LinearLayout exercisesList = findViewById(R.id.workout_summary_exercises);

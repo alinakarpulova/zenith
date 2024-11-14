@@ -254,6 +254,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exerciseSets;
     }
 
+    public void deleteWorkout(int workoutId){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM WORKOUTS WHERE id=?";
+        db.execSQL(query, new Object[]{workoutId});
+    }
+
     public void saveWorkout(Workout workout) {
         SQLiteDatabase db = getWritableDatabase();
 

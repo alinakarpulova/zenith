@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.example.zenith.R;
 import com.example.zenith.models.ExerciseSet;
@@ -48,7 +49,7 @@ public class WorkoutRow extends ConstraintLayout {
         deleteButton.setColorFilter(MaterialColors.getColor(view, com.google.android.material.R.attr.colorOnSurface));
         deleteButton.setOnClickListener((view) -> {
             if (!workoutExercise.getExerciseSets().isEmpty()) {
-                new AlertDialog.Builder(context)
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
                         .setTitle("Delete Confirmation")
                         .setMessage("Are you sure you want to remove this exercise?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -59,6 +60,9 @@ public class WorkoutRow extends ConstraintLayout {
                         })
                         .setNegativeButton("No", null)
                         .show();
+                // Change the button colors after the dialog is shown
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getContext(), R.color.colorError));
             } else {
                 onRemoveListener.onRemove();
             }

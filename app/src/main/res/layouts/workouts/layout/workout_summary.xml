@@ -48,10 +48,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workout_summary_cancel_btn"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/action_cancel"
+            android:textColor="@color/design_default_color_error"
+            app:cornerRadius="8dp"
+            android:backgroundTint="?attr/colorErrorContainer"
+            app:rippleColor="?attr/colorErrorContainer" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/workout_summary_delete_btn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_delete_workout"
             android:textColor="@color/design_default_color_error"
             app:cornerRadius="8dp"
             app:rippleColor="?attr/colorErrorContainer" />
