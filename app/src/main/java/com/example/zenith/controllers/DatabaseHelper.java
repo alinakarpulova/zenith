@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "   LEFT JOIN workout_exercises we ON w.id = we.workout_id\n" +
                 "   LEFT JOIN exercises e ON we.exercise_id = e.id\n" +
                 "   LEFT JOIN workout_exercise_sets wes ON we.id = wes.workout_exercise_id\n" +
-                "   ORDER BY w.endTime DESC;";
+                "   ORDER BY w.startTime DESC;";
 
 
         SQLiteDatabase db = getReadableDatabase();
@@ -230,6 +231,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         workouts.addAll(workoutMap.values());
+        workouts.sort(Comparator.comparing(Workout::getEndTime).reversed());
+
         return workouts;
     }
 

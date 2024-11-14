@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.zenith.R;
 import com.example.zenith.components.DialogWithSearchMulti;
@@ -118,7 +119,7 @@ public class WorkoutNew extends AppCompatActivity {
     }
 
     private void cancelWorkout() {
-        new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Exit Confirmation")
                 .setMessage("Are you sure you want cancel the workout?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -130,6 +131,9 @@ public class WorkoutNew extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+        // Change the button colors after the dialog is shown
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorError));
     }
 
     @Override

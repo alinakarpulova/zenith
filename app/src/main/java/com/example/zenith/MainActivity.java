@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_item_workouts);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main, new WorkoutsFragment())
+                .commit();
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override

@@ -2,6 +2,7 @@
 <resources>
     <style name="ToolbarColoredIcons">
         <item name="android:tint">?attr/colorOnBackground</item>
+        <item name="android:backgroundTint">@color/surfaceHigh</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Heading">

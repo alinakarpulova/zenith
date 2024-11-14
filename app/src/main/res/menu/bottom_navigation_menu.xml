@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_item_workouts"
-        android:icon="@drawable/ic_workout"
-        android:title="@string/route_workouts" />
-    <item
         android:id="@+id/nav_item_exercises"
         android:icon="@drawable/ic_dumbbell"
         android:title="@string/route_exercises" />
+    <item
+        android:id="@+id/nav_item_workouts"
+        android:icon="@drawable/ic_workout"
+        android:title="@string/route_workouts" />
     <item
         android:id="@+id/nav_item_stats"
         android:icon="@drawable/ic_stats"

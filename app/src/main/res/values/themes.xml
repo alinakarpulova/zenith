@@ -22,6 +22,7 @@
     <color name="iconTint">#222222</color>
 
     <color name="colorPrimary">#10b981</color>
+    <color name="colorError">#dc2626</color>
     <color name="colorOnPrimary">#a7f3d0</color>
     <color name="rippleColor">#55a7f3d0</color>
     <color name="surfaceColor">#22a7f3d0</color>
