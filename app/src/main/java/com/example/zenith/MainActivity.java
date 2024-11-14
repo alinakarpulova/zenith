@@ -44,18 +44,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.nav_item_home);
+        bottomNavigationView.setSelectedItemId(R.id.nav_item_workouts);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Default Fragment
-                Fragment selectedFragment = new HomeFragment();
+                Fragment selectedFragment = new WorkoutsFragment();
                 int id = item.getItemId();
-                if (id == R.id.nav_item_home) {
-                    selectedFragment = new HomeFragment();
-                }
                 if (id == R.id.nav_item_workouts) {
                     selectedFragment = new WorkoutsFragment();
                 }

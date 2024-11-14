@@ -8,4 +8,5 @@
     android:textAlignment="gravity"
     android:drawableStart="?android:attr/listChoiceIndicatorSingle"
     android:fontFamily="@font/inter"
+    android:checkMarkTint="@color/colorPrimary"
     />

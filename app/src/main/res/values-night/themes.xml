@@ -12,6 +12,8 @@
         <item name="labelFontFamily">@font/inter_light</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
 
+        <item name="android:statusBarColor">@color/colorOnPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <color name="iconTint">#ffff</color>

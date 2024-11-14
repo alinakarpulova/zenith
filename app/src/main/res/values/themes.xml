@@ -9,6 +9,9 @@
         <item name="headingFontFamily">@font/inter_medium</item>
         <item name="bodyFontFamily">@font/inter</item>
         <item name="labelFontFamily">@font/inter_light</item>
+
+        <item name="android:statusBarColor">@color/colorOnPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- themes.xml -->
@@ -22,6 +25,8 @@
     <color name="colorOnPrimary">#a7f3d0</color>
     <color name="rippleColor">#55a7f3d0</color>
     <color name="surfaceColor">#22a7f3d0</color>
+    <color name="backgroundColor">#f5fffb</color>
+    <color name="surfaceHigh">#d4fcee</color>
     <color name="pillBackground">@color/cardview_shadow_end_color</color>
     <color name="shapeBackground">@color/cardview_light_background</color>
     <color name="textInputBackground">?attr/colorSurfaceContainer</color>

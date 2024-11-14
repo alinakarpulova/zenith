@@ -9,6 +9,7 @@
         android:minWidth="0dp"
         android:layout_marginHorizontal="8dp"
         android:layout_width="wrap_content"
+        android:buttonTint="@color/colorPrimary"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
