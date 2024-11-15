@@ -97,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Exercise> getExerciseList() {
         List<Exercise> exercises = new ArrayList<>();
 
-        String query = "SELECT * FROM exercises WHERE ID < 100";
+        String query = "SELECT * FROM exercises";
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -114,6 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 exercises.add(new Exercise(id, name, image, instructions, bodyPart, category, deletable));
             } while (cursor.moveToNext());
         }
+        exercises.sort(Comparator.comparing(Exercise::getName));
         // Close connections
         cursor.close();
         db.close();
