@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import com.example.zenith.R;
 import com.example.zenith.components.SelectableItem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Adapter<DialogRowAdapter.ViewHolder> {
@@ -65,9 +63,10 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getName().setText(filteredItems.get(position).getHeading());
-        viewHolder.getCategory().setText(filteredItems.get(position).getSubheading());
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        T item = filteredItems.get(position);
+        viewHolder.getName().setText(item.getHeading());
+        viewHolder.getCategory().setText(item.getSubheading());
 
         viewHolder.getRadioBtn().setChecked(checkedItem != null && position == checkedItem);
 
@@ -125,7 +124,6 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
         protected FilterResults performFiltering(CharSequence constraint) {
             String filterPattern = constraint != null ? constraint.toString().toLowerCase().trim() : "";
 
-            FilterResults results = new FilterResults();
             List<T> filteredList = new ArrayList<>();
 
             if (filterPattern.isEmpty()) {
@@ -134,23 +132,37 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
             } else {
                 // Filter by name and category
                 for (T item : items) {
-                    if (item.getHeading().toLowerCase().contains(filterPattern) ||
-                            item.getSubheading().toLowerCase().contains(filterPattern)) {
+                    if (item.getHeading().toLowerCase().contains(filterPattern.toLowerCase()) ||
+                            item.getSubheading().toLowerCase().contains(filterPattern.toLowerCase())) {
                         filteredList.add(item);
                     }
                 }
             }
-
+            FilterResults results = new FilterResults();
             results.values = filteredList;
             results.count = filteredList.size();
             return results;
         }
 
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredItems.clear();
-            filteredItems.addAll((List<T>) results.values);
-            notifyDataSetChanged(); // Notify adapter about data change
+        protected void publishResults(CharSequence constraint,@NonNull FilterResults results) {
+            if (results.values != null) {
+                List<T> newFilteredList = (List<T>) results.values;
+
+                // Clear and update the filteredItems list
+                filteredItems.clear();
+                filteredItems.addAll(newFilteredList);
+
+                // Reset checkedItem if it no longer exists in filteredItems
+                if (checkedItem != null && (checkedItem >= filteredItems.size() || !filteredItems.contains(items.get(checkedItem)))) {
+                    checkedItem = null;
+                }
+
+                // Notify adapter about data change
+                notifyDataSetChanged();
+            } else {
+                Log.w("DialogRowAdapter", "Filter results returned null");
+            }
         }
     }
 

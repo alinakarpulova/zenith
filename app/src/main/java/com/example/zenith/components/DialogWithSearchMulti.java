@@ -3,6 +3,7 @@ package com.example.zenith.components;
 import android.content.Context;
 import android.widget.Button;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.zenith.R;
@@ -34,6 +35,21 @@ public class DialogWithSearchMulti<T extends SelectableItem> extends DialogWithS
                 selectedItems.add(itemList.get(itemList.indexOf(item)));
             }
         }
+
+        searchView = dialog.findViewById(R.id.dialog_search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
 
         Button dialogConfirm = dialog.findViewById(R.id.dialog_confirm_button);
         dialogConfirm.setActivated(false);

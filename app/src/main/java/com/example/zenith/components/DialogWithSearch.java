@@ -22,19 +22,21 @@ public class DialogWithSearch<T extends SelectableItem> {
     protected final Context context;
     protected SearchView searchView;
     RecyclerView recyclerView;
+    private final DialogRowAdapter<T> adapter;
 
 
     public DialogWithSearch(List<T> itemList, Context context) {
         dialog = new Dialog(context);
         this.itemList = itemList;
         this.context = context;
+        adapter = new DialogRowAdapter<>(itemList);
     }
 
 
     public void showDialog() {
         dialogSetup();
 
-        DialogRowAdapter adapter = new DialogRowAdapter<>(itemList);
+        recyclerView = dialog.findViewById(R.id.dialog_list_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -59,7 +61,6 @@ public class DialogWithSearch<T extends SelectableItem> {
         dialog.setContentView(R.layout.dialog_with_list_and_search);
         dialog.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.shape_round));
         dialog.setCancelable(true);
-        recyclerView = dialog.findViewById(R.id.dialog_list_view);
     }
 
     public Dialog getDialog() {
