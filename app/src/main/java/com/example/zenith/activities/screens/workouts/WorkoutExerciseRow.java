@@ -20,6 +20,7 @@ public class WorkoutExerciseRow extends LinearLayout {
 
     private void init(Context context, WorkoutExercise workoutExercise) {
         View view = LayoutInflater.from(context).inflate(R.layout.workout_row_exercise, this, true);
+
         TextView name = view.findViewById(R.id.workout_row_exercise_name);
         TextView sets = view.findViewById(R.id.workout_row_exercise_sets);
 

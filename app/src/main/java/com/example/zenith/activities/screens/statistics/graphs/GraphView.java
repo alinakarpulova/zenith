@@ -147,7 +147,7 @@ public class GraphView extends View {
 
         // Horizontal grid lines
         Log.d("GRID", String.valueOf(cells.y / labelMultiplier));
-        for (int i = 0; i < cells.y / labelMultiplier; i++) {
+        for (int i = 0; i <= cells.y / labelMultiplier; i++) {
             canvas.drawLine(chartBounds.x,  gridSize.y - (i * cellSize.y * labelMultiplier), gridSize.x, gridSize.y - (i * cellSize.y * labelMultiplier), gridPaint);
         }
     }

@@ -392,7 +392,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             workoutStatistics.add(new WorkoutStatistic<Integer>("Total Workouts", cursor.getInt(0)));
             workoutStatistics.add(new WorkoutStatistic<Float>("Average Workout Duration", cursor.getFloat(1)));
-            workoutStatistics.add(new WorkoutStatistic<Integer>("Maximum Consecutive Workouts", cursor.getInt(2)));
+            workoutStatistics.add(new WorkoutStatistic<Integer>("Maximum Consecutive Days With Workout", cursor.getInt(2)));
             workoutStatistics.add(new WorkoutStatistic<String>("Most Performed Exercise", cursor.getString(3)));
         }
 

@@ -42,12 +42,15 @@ public class SimpleWorkoutAdapter extends ArrayAdapter<Workout> {
 
 
         NumberFormat formatter = new DecimalFormat("00");
+        TextView date = convertView.findViewById(R.id.workout_date);
+        date.setText(workout.getStartTime().toLocalDate().toString());
         TextView durationTxt = convertView.findViewById(R.id.workout_duration);
         Duration duration = Duration.between(workout.getStartTime(), workout.getEndTime());
         String durationStr = formatter.format(duration.toHoursPart()) + ":"
                 + formatter.format(duration.toMinutesPart()) + ":"
                 + formatter.format(duration.toSecondsPart());
         durationTxt.setText(durationStr);
+
 
         exerciseView = convertView.findViewById(R.id.workout_row_exercises);
         // Add exercises to this view
