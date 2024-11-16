@@ -2,6 +2,8 @@ package com.example.zenith.components;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.core.content.ContextCompat;

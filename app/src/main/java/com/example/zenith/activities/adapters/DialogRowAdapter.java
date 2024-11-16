@@ -1,5 +1,6 @@
 package com.example.zenith.activities.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Adapter<DialogRowAdapter.ViewHolder> {
-    private List<T> items;
+    private final List<T> items;
     private Filter filter;
-    private List<T> filteredItems;
+    private final List<T> filteredItems;
     private Integer checkedItem;
 
     public DialogRowAdapter(List<T> items) {
@@ -148,7 +149,7 @@ public class DialogRowAdapter<T extends SelectableItem> extends RecyclerView.Ada
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredItems.clear();
-            filteredItems.addAll((Collection<? extends T>) results.values);
+            filteredItems.addAll((List<T>) results.values);
             notifyDataSetChanged(); // Notify adapter about data change
         }
     }
