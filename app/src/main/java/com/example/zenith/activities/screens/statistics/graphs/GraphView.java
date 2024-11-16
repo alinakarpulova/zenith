@@ -3,9 +3,11 @@ package com.example.zenith.activities.screens.statistics.graphs;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Debug;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -31,7 +33,7 @@ public class GraphView extends View {
 
     private Vec2 screenDimensions;
     private Vec2[] points;
-    private Vec2[] range = new Vec2[]{new Vec2(0, 0), new Vec2(0, 0)};
+    private final Vec2[] range = new Vec2[]{new Vec2(0, 0), new Vec2(0, 0)};
     private Grid grid;
 
     private boolean gridEnabled = true;
@@ -116,6 +118,7 @@ public class GraphView extends View {
         super.onDraw(canvas);
         if (grid != null) {
             int diff = (int) (range[1].y - range[0].y);
+            Log.d("GRID", String.valueOf(diff) + " " + range[0].toString() + " " + range[1].toString());
             int labelMultiplier = 1;
             if (diff > 10 && diff <= 140) {
                 labelMultiplier = 10;
@@ -143,8 +146,9 @@ public class GraphView extends View {
         }
 
         // Horizontal grid lines
-        for (int i = (int) range[0].y / labelMultiplier; i < cells.y / labelMultiplier; i++) {
-            canvas.drawLine(chartBounds.x, chartBounds.y + i * cellSize.y * labelMultiplier, gridSize.x, chartBounds.y + i * cellSize.y * labelMultiplier, gridPaint);
+        Log.d("GRID", String.valueOf(cells.y / labelMultiplier));
+        for (int i = 0; i < cells.y / labelMultiplier; i++) {
+            canvas.drawLine(chartBounds.x,  gridSize.y - (i * cellSize.y * labelMultiplier), gridSize.x, gridSize.y - (i * cellSize.y * labelMultiplier), gridPaint);
         }
     }
 
@@ -204,19 +208,31 @@ public class GraphView extends View {
                 .max()
                 .orElse(0);
 
+        if (maxHeight == 0){
+            maxHeight = 10;
+        }
 
         double maxWidth = Arrays.stream(points)
                 .mapToDouble(point -> point.x)
                 .max().orElse(0);
+        if (maxWidth == 0){
+            maxWidth = 10;
+        }
 
         double minHeight = Arrays.stream(points)
                 .mapToDouble(point -> point.y)
                 .min()
                 .orElse(0);
+        if (points.length == 1) {
+            minHeight = 0;
+        }
 
         double minWidth = Arrays.stream(points)
                 .mapToDouble(point -> point.x)
                 .min().orElse(0);
+        if (points.length == 1) {
+            minWidth = 0;
+        }
 
         range[0].x = (float) minWidth;
         range[1].x = (float) maxWidth;

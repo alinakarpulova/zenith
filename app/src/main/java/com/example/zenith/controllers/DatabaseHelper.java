@@ -319,7 +319,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "JOIN exercises E ON WE.exercise_id = E.id\n" +
                 "WHERE E.id = ?\n" +
                 "GROUP BY workout_id, exercise_id\n" +
-                "ORDER BY W.startTime DESC\n" +
+                "ORDER BY W.startTime ASC\n" +
                 "LIMIT 10";
         String[] selectionArgs = new String[]{String.valueOf(id)};
         Cursor cursor = db.rawQuery(query, selectionArgs);
