@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zenith.R;
@@ -82,17 +83,21 @@ public class ExerciseRowAdapter extends RecyclerView.Adapter<ExerciseRowAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.getName().setText(filteredExercises.get(position).getName());
         viewHolder.getLabel().setText(filteredExercises.get(position).getExerciseCategory().toString());
+        if (filteredExercises.get(position).getImage() == null) {
+            Drawable icon = ContextCompat.getDrawable(this.context, R.drawable.ic_dumbbell);
+            viewHolder.getImage().setImageDrawable(icon);
+        } else {
+            AssetManager assetManager = context.getAssets();
+            InputStream inputStream = null;
+            try {
+                inputStream = assetManager.open("gifs/" + filteredExercises.get(position).getImage());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
 
-        AssetManager assetManager = context.getAssets();
-        InputStream inputStream = null;
-        try {
-            inputStream = assetManager.open("gifs/" + filteredExercises.get(position).getImage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            viewHolder.getImage().setImageDrawable(drawable);
         }
-        Drawable drawable = Drawable.createFromStream(inputStream, null);
-
-        viewHolder.getImage().setImageDrawable(drawable);
         // Set click listener on the itemView
         viewHolder.itemView.setOnClickListener(v -> {
             // Start the new activity
