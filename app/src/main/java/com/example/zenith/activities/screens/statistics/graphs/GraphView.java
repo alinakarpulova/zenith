@@ -117,8 +117,7 @@ public class GraphView extends View {
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         if (grid != null) {
-            int diff = (int) (range[1].y - range[0].y);
-            Log.d("GRID", String.valueOf(diff) + " " + range[0].toString() + " " + range[1].toString());
+            int diff = (int) (range[1].y);
             int labelMultiplier = 1;
             if (diff > 10 && diff <= 140) {
                 labelMultiplier = 10;
